@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.jiy.R
 import com.example.jiy.Users
@@ -54,6 +55,7 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
                                         println("new")
                                         val user = Users(FirebaseAuth.getInstance().uid.toString(),username,"","",mail)
                                         databaseReference.child(username).setValue(user)
+                                        Toast.makeText(this@RegistrationFragment.requireContext(), "hehe2", Toast.LENGTH_SHORT).show()
                                     }
                                 }
 
