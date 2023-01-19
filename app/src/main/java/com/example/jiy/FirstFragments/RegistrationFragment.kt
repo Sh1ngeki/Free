@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.jiy.R
 
+
 class RegistrationFragment:Fragment(R.layout.registration_fragment) {
     private lateinit var backSignIn1 : TextView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -21,6 +22,7 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
             fragmentTransaction?.addToBackStack(null)
             fragmentTransaction?.commit()
         }
+
 
         return view
     }
