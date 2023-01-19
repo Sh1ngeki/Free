@@ -35,6 +35,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
             fragmentTransaction?.commit()
         }
 
+
         return view
     }
 
