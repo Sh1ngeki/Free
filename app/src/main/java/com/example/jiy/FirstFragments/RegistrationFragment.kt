@@ -12,7 +12,7 @@ import com.example.jiy.R
 import com.example.jiy.Users
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.firestore.auth.User
+
 
 
 class RegistrationFragment:Fragment(R.layout.registration_fragment) {
