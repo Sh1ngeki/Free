@@ -31,13 +31,13 @@ class ForgotPasswordFragment:Fragment(R.layout.forgot_password_fragment) {
         }
         forgorbutton.setOnClickListener {
             if (forgormail.text.isEmpty()){
-                forgormail.hint = "enter valid E-mail"
-                Toast.makeText(this.requireContext(), "please enter valid E-mail", Toast.LENGTH_SHORT).show()
+                forgormail.hint = "Enter E-mail"
+                Toast.makeText(this.requireContext(), "Check E-mail", Toast.LENGTH_SHORT).show()
             }else {
                 FirebaseAuth.getInstance().sendPasswordResetEmail(forgormail.text.toString())
-                    .addOnSuccessListener { Toast.makeText(this.requireContext(), "check E-mail", Toast.LENGTH_SHORT).show()}
+                    .addOnSuccessListener { Toast.makeText(this.requireContext(), "Check E-mail", Toast.LENGTH_SHORT).show()}
                     .addOnFailureListener{
-                        Toast.makeText(this.requireContext(), "error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this.requireContext(), "Enter the E-mail you signed up with", Toast.LENGTH_SHORT).show()
                     }
             }
         }
