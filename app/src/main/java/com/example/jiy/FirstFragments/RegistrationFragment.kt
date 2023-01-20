@@ -1,6 +1,7 @@
 package com.example.jiy.FirstFragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.jiy.R
+import com.example.jiy.SecondFragments.ProfileFragment
 import com.example.jiy.Users
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.*
 
 
@@ -53,9 +56,25 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
                                     } else {
                                         // username is available, proceed with registration
                                         println("new")
-                                        val user = Users(FirebaseAuth.getInstance().uid.toString(),username,"","",mail)
-                                        databaseReference.child(username).setValue(user)
-                                        Toast.makeText(this@RegistrationFragment.requireContext(), "hehe2", Toast.LENGTH_SHORT).show()
+                                        val us = Users(FirebaseAuth.getInstance().uid.toString(),username,"","",mail)
+                                        databaseReference.child(username).setValue(us)
+                                        val profileUpdates = UserProfileChangeRequest.Builder()
+                                            .setDisplayName(username)
+                                            .build()
+
+                                        FirebaseAuth.getInstance().currentUser?.updateProfile(profileUpdates)
+                                            ?.addOnCompleteListener { task ->
+                                                if (task.isSuccessful) {
+                                                    Toast.makeText(this@RegistrationFragment.requireContext(), "${FirebaseAuth.getInstance().currentUser?.displayName}", Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
+
+
+
+
+
+
+
                                     }
                                 }
 

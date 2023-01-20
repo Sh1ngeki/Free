@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.jiy.R
+import com.example.jiy.SecondFragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment:Fragment(R.layout.login_fragment) {
@@ -45,7 +46,10 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
             val pass = loginpass.text.toString()
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(mail,pass)
-                .addOnSuccessListener {  }
+                .addOnSuccessListener {
+
+
+                }
 
         }
 
