@@ -2,6 +2,7 @@ package com.example.jiy.SecondFragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.jiy.Friends
 import com.example.jiy.MainActivity
 import com.example.jiy.PersonRecyclerAdapter
@@ -27,6 +29,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
     private lateinit var recyclerAdapter: PersonRecyclerAdapter
     private lateinit var recyclerview: RecyclerView
     private var friendslist = arrayListOf<Friends>()
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private var database = FirebaseDatabase.getInstance()
     private lateinit var storagereference: StorageReference
@@ -41,12 +44,23 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
     private lateinit var addfriendsbutton:Button
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        swipeRefreshLayout = view.findViewById(R.id.swiperefreshlayout)
         addfriendstxt = view.findViewById(R.id.addfriendtext)
         recyclerview = view.findViewById(R.id.recycle)
         addfriendsbutton = view.findViewById(R.id.addfriendsbutton)
         storagereference = FirebaseStorage.getInstance().getReference("users")
         storage1 = FirebaseStorage.getInstance().getReference("default")
+
+        swipeRefreshLayout.setOnRefreshListener {
+
+            Handler().postDelayed(Runnable {
+                swipeRefreshLayout.isRefreshing =false
+            },2000)
+
+
+        }
+
+
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -199,6 +213,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
 
 
     }
+
 
     private fun getfriends(friendslist: ArrayList<Friends>) {
         println()
