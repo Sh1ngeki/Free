@@ -44,6 +44,8 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
             val username = usernametext.text.toString()
             val pass1 = pass1text.text.toString()
             val pass2 = pass2text.text.toString()
+            val emptylist= arrayListOf<String>()
+            emptylist.add("")
 
             if (!mail.isEmpty()&&!username.isEmpty()&&!pass1.isEmpty()&&!pass2.isEmpty()){
                 if (pass1==pass2) {
@@ -58,7 +60,7 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
                                     } else {
                                         // username is available, proceed with registration
                                         println("new")
-                                        val us = Users(FirebaseAuth.getInstance().uid.toString(),username,"","",mail)
+                                        val us = Users(FirebaseAuth.getInstance().uid.toString(),username,"","",mail,emptylist)
                                         databaseReference.child(username).setValue(us)
                                         val profileUpdates = UserProfileChangeRequest.Builder()
                                             .setDisplayName(username)
