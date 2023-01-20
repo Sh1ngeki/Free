@@ -149,7 +149,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
                         .get().addOnSuccessListener {a->
                             if (a.exists()) {
                                 if (a.value.toString().contains(friendusername)){
-                                    Toast.makeText(this.requireContext(), "user is already your friend", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this.requireContext(), "User is already your friend", Toast.LENGTH_SHORT).show()
                                 }else{
                                     //daamate megobari
 
@@ -185,7 +185,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
                         }
 
                 } else {
-                    Toast.makeText(this.requireContext(), "user doesnot exist", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.requireContext(), "User does not exist", Toast.LENGTH_SHORT).show()
                 }
             }
             }
