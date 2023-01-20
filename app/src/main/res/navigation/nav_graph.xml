@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/feedFragment23">
+
+
+    <fragment
+        android:id="@+id/feedFragment23"
+        tools:layout="@layout/feed_fragment"
+        android:name="com.example.jiy.SecondFragments.FeedFragment"
+        android:label="FeedFragment" />
+    <fragment
+        android:id="@+id/postFragment23"
+        tools:layout="@layout/post_fragment"
+        android:name="com.example.jiy.SecondFragments.PostFragment"
+        android:label="PostFragment" />
+    <fragment
+        android:id="@+id/friendsFragment23"
+        tools:layout="@layout/add_friends_fragment"
+        android:name="com.example.jiy.SecondFragments.FriendsFragment"
+        android:label="FriendsFragment" />
+    <fragment
+        android:id="@+id/profileFragment23"
+        tools:layout="@layout/profile_fragment"
+        android:name="com.example.jiy.SecondFragments.ProfileFragment"
+        android:label="ProfileFragment" />
+</navigation>

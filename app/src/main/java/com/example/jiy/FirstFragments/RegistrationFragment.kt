@@ -1,5 +1,6 @@
 package com.example.jiy.FirstFragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.jiy.HomeActivity
 import com.example.jiy.R
 import com.example.jiy.SecondFragments.ProfileFragment
 import com.example.jiy.Users
@@ -65,7 +67,8 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
                                         FirebaseAuth.getInstance().currentUser?.updateProfile(profileUpdates)
                                             ?.addOnCompleteListener { task ->
                                                 if (task.isSuccessful) {
-                                                    Toast.makeText(this@RegistrationFragment.requireContext(), "${FirebaseAuth.getInstance().currentUser?.displayName}", Toast.LENGTH_SHORT).show()
+                                                    Toast.makeText(this@RegistrationFragment.requireContext(), "Welcome ${FirebaseAuth.getInstance().currentUser?.displayName}", Toast.LENGTH_SHORT).show()
+                                                    startActivity(Intent(this@RegistrationFragment.requireContext(), HomeActivity::class.java ))
                                                 }
                                             }
 

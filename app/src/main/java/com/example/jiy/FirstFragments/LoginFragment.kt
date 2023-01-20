@@ -1,5 +1,6 @@
 package com.example.jiy.FirstFragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.jiy.HomeActivity
 import com.example.jiy.R
 import com.example.jiy.SecondFragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -47,6 +50,8 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(mail,pass)
                 .addOnSuccessListener {
+                    Toast.makeText(this@LoginFragment.requireContext(), "Welcome", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@LoginFragment.requireContext(), HomeActivity::class.java ))
 
 
                 }
