@@ -22,7 +22,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginStart="16dp"
         android:text="Friends E-mail"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:fontFamily="@font/kai"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/saxeli" />
@@ -35,7 +35,7 @@
         android:text="Number"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/kai"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/gmail" />
 
