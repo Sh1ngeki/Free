@@ -1,5 +1,6 @@
 package com.example.jiy.SecondFragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jiy.Friends
+import com.example.jiy.MainActivity
 import com.example.jiy.PersonRecyclerAdapter
 import com.example.jiy.R
 import com.google.firebase.auth.FirebaseAuth
@@ -39,6 +41,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
     private lateinit var addfriendsbutton:Button
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         addfriendstxt = view.findViewById(R.id.addfriendtext)
         recyclerview = view.findViewById(R.id.recycle)
         addfriendsbutton = view.findViewById(R.id.addfriendsbutton)
