@@ -3,6 +3,9 @@ package com.example.jiy.SecondFragments
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +13,7 @@ import com.example.jiy.Friends
 import com.example.jiy.PersonRecyclerAdapter
 import com.example.jiy.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -21,26 +25,31 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
     private lateinit var recyclerAdapter: PersonRecyclerAdapter
     private lateinit var recyclerview: RecyclerView
     private var friendslist = arrayListOf<Friends>()
-    private var myfriends = arrayListOf<String>()
+
     private var database = FirebaseDatabase.getInstance()
     private lateinit var storagereference: StorageReference
     private lateinit var storage1: StorageReference
     private lateinit var frnd1:ArrayList<String>
+    private lateinit var addfriendstxt:EditText
+    private var userref = database.getReference("users")
+    private var userfriendlist1 = arrayListOf<String>()
+    private var userfriendlist2 = arrayListOf<String>()
 
+
+    private lateinit var addfriendsbutton:Button
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        addfriendstxt = view.findViewById(R.id.addfriendtext)
         recyclerview = view.findViewById(R.id.recycle)
-        friendslist.add(Friends("nika","nikol","1234","",))
+        addfriendsbutton = view.findViewById(R.id.addfriendsbutton)
         storagereference = FirebaseStorage.getInstance().getReference("users")
         storage1 = FirebaseStorage.getInstance().getReference("default")
-
-        var userref = database.getReference("users")
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 friendslist.clear()
+
                 println(FirebaseAuth.getInstance().uid)
                 userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).get()
                     .addOnSuccessListener {
@@ -75,6 +84,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
                                                                 println("done")
                                                                 println(friendslist)
                                                                 getfriends(friendslist)
+
                                                             }
                                                         }
                                                     }
@@ -120,8 +130,69 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
                 Log.w("ValueEventListener", "loadPost:onCancelled", databaseError.toException())
             }
         }
-        userref.addValueEventListener(postListener)
+        userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).addValueEventListener(postListener)
+        //megobrebis damateba
+        addfriendsbutton.setOnClickListener {
 
+
+            val friendusername = addfriendstxt.text.toString().trim()
+            addfriendstxt.setText("")
+
+            if (friendusername!=FirebaseAuth.getInstance().currentUser?.displayName.toString() &&friendusername.isNotEmpty()){
+                userref.child(friendusername).get().addOnSuccessListener {u->
+                if (u.exists()) {
+
+                    userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).child("friendsname")
+                        .get().addOnSuccessListener {a->
+                            if (a.exists()) {
+                                if (a.value.toString().contains(friendusername)){
+                                    Toast.makeText(this.requireContext(), "user is already your friend", Toast.LENGTH_SHORT).show()
+                                }else{
+                                    //daamate megobari
+
+                                    userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+                                        .get().addOnSuccessListener {
+                                            if (it.exists()){
+                                                userfriendlist1 = it.child("friendsname").value as ArrayList<String>
+
+
+                                                userfriendlist1.add(friendusername)
+                                                println("userfriends"+userfriendlist1)
+                                                userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).child("friendsname").setValue(userfriendlist1)
+
+                                            }
+                                        }
+
+                                    userref.child(friendusername)
+                                        .get().addOnSuccessListener {
+                                            if (it.exists()){
+                                                userfriendlist2 = it.child("friendsname").value as ArrayList<String>
+
+
+                                                userfriendlist2.add(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+                                                println("userfriends2"+userfriendlist2)
+                                                userref.child(friendusername).child("friendsname").setValue(userfriendlist2)
+
+                                            }
+                                        }
+
+                                }
+
+                            }
+                        }
+
+                } else {
+                    Toast.makeText(this.requireContext(), "user doesnot exist", Toast.LENGTH_SHORT).show()
+                }
+            }
+            }
+
+
+
+
+
+
+        }
 
 
     }
@@ -134,6 +205,8 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         recyclerview.adapter = recyclerAdapter
 
     }
+
+
 
 
 

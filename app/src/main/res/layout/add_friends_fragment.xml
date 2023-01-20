@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/img_7"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:windowSoftInputMode="adjustPan|stateVisible">
 
     <LinearLayout
         android:weightSum="10"
@@ -14,10 +15,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <EditText
+
+            android:id="@+id/addfriendtext"
             android:layout_weight="9"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
         <Button
+            android:id="@+id/addfriendsbutton"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
