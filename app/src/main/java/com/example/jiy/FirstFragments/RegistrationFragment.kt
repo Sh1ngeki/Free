@@ -60,7 +60,7 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
                                     } else {
                                         // username is available, proceed with registration
                                         println("new")
-                                        val us = Users(FirebaseAuth.getInstance().uid.toString(),username,"","",mail,emptylist)
+                                        val us = Users(FirebaseAuth.getInstance().uid.toString(),username,mail,emptylist,)
                                         databaseReference.child(username).setValue(us)
                                         val profileUpdates = UserProfileChangeRequest.Builder()
                                             .setDisplayName(username)
