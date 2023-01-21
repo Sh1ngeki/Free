@@ -73,7 +73,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
             val mail = loginmail.text.toString()
             val pass = loginpass.text.toString()
             if (mail.isEmpty() ||pass.isEmpty()){
-                pass
+
             }else {
 
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(mail, pass)
@@ -98,7 +98,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                     println("frnd"+frnd1)
                                     println(frnd1.size)
                                     if (frnd1.size==1) {
-
+                                        MySingleton.data = arrayListOf()
                                         loadprofileimage()
                                         Thread.sleep(1000)
                                         fragmentTransaction?.replace(
@@ -107,8 +107,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
 
                                         )
                                         println("datanull")
-                                        MySingleton.data =
-                                            null
+
                                         fragmentTransaction?.commit()
 
                                     }else {

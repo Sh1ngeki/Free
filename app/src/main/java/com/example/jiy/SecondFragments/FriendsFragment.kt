@@ -35,7 +35,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
     private lateinit var recyclerview: RecyclerView
 
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private var friendslist = arrayListOf<Friends>()
+    private var friendslist1 = arrayListOf<Friends>()
     private var database = FirebaseDatabase.getInstance()
     private lateinit var storagereference: StorageReference
     private lateinit var storage1: StorageReference
@@ -58,25 +58,26 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         storage1 = FirebaseStorage.getInstance().getReference("default")
 
         println(value)
-        if (LoginFragment.MySingleton.data !=null){
 
+        if (LoginFragment.MySingleton.data !=null){
+            println("aeiieieiejdeidjiejdiejdi"+LoginFragment.MySingleton.data!!)
             value = LoginFragment.MySingleton.data!!
             println("login "+ value)
-            println(LoginFragment.MySingleton.data!!)
+
             println("loginvalue")
 
         }
-        friendslist = value
+        friendslist1 = value
         println(value)
 
 
-            recyclerAdapter = PersonRecyclerAdapter(friendslist)
+            recyclerAdapter = PersonRecyclerAdapter(friendslist1)
             recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
             recyclerview.adapter = recyclerAdapter
 
 
         swipeRefreshLayout.setOnRefreshListener {
-            friendslist.clear()
+            friendslist1.clear()
             val window = requireActivity().window
             window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
@@ -108,11 +109,11 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
                                                         it.child("username").value.toString(),
                                                         it.child("userid").value.toString(),
                                                         it.child("gmail").value.toString(),)
-                                                    friendslist.add(friend)
-                                                    if (friendslist.size == frnd1.size -1) {
+                                                    friendslist1.add(friend)
+                                                    if (friendslist1.size == frnd1.size -1) {
 
 
-                                                        getfriends(friendslist)
+                                                        getfriends(friendslist1)
 
                                                     }
                                                 }
@@ -126,11 +127,11 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
                                                     it.child("username").value.toString(),
                                                     it.child("userid").value.toString(),
                                                     it.child("gmail").value.toString(),)
-                                                friendslist.add(friend)
-                                                if (friendslist.size == frnd1.size -1) {
+                                                friendslist1.add(friend)
+                                                if (friendslist1.size == frnd1.size -1) {
 
 
-                                                    getfriends(friendslist)
+                                                    getfriends(friendslist1)
                                                 }
                                             }
 
@@ -236,7 +237,6 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         recyclerAdapter = PersonRecyclerAdapter(friendslist)
         recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
         recyclerview.adapter = recyclerAdapter
-        value = friendslist
         println("value++++++"+value)
         println("friednsasasdsad" +friendslist)
 
