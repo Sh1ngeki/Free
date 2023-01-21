@@ -50,8 +50,8 @@
         app:layout_constraintTop_toTopOf="parent" >
         <ImageView
             android:id="@+id/profilePic"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
             android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
@@ -77,7 +77,7 @@
         android:id="@+id/profilechangepassword"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/inappbuttons"
         android:fontFamily="@font/kai"
         android:text="change password"
@@ -92,7 +92,7 @@
         android:background="@drawable/inappbuttons"
         android:fontFamily="@font/kai"
         android:text="Log Out"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
