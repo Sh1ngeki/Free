@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -43,7 +44,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
     private var userref = database.getReference("users")
     private var userfriendlist1 = arrayListOf<String>()
     private var userfriendlist2 = arrayListOf<String>()
-    private  var value = arrayListOf<Friends>()
+    private var value = arrayListOf<Friends>()
 
 
     private lateinit var addfriendsbutton:Button
@@ -56,29 +57,37 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         storagereference = FirebaseStorage.getInstance().getReference("users")
         storage1 = FirebaseStorage.getInstance().getReference("default")
 
-
+        println(value)
         if (LoginFragment.MySingleton.data !=null){
+
             value = LoginFragment.MySingleton.data!!
+            println("login "+ value)
+            println(LoginFragment.MySingleton.data!!)
+            println("loginvalue")
+
         }
+        friendslist = value
         println(value)
 
-        friendslist = value
-        recyclerAdapter = PersonRecyclerAdapter(friendslist)
-        recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
-        recyclerview.adapter = recyclerAdapter
+
+            recyclerAdapter = PersonRecyclerAdapter(friendslist)
+            recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
+            recyclerview.adapter = recyclerAdapter
 
 
         swipeRefreshLayout.setOnRefreshListener {
             friendslist.clear()
+            val window = requireActivity().window
+            window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
-            println(FirebaseAuth.getInstance().uid)
+
             userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).get().addOnSuccessListener {
 
                 if (it.exists()) {
-                    println("uid")
+
 
                     frnd1 = it.child("friendsname").value as ArrayList<String>
-                    println("frnd"+frnd1)
+
 
                     for (i in frnd1) {
 
@@ -91,7 +100,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
                                         var imageexistance = false
                                         for (item in items) {
                                             if (item.name.trim() == i.trim()) {
-                                                println("object exists")
+
                                                 imageexistance = true
                                                 storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
                                                     val friend = Friends(
@@ -101,8 +110,8 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
                                                         it.child("gmail").value.toString(),)
                                                     friendslist.add(friend)
                                                     if (friendslist.size == frnd1.size -1) {
-                                                        println("done")
-                                                        println(friendslist)
+
+
                                                         getfriends(friendslist)
 
                                                     }
@@ -119,8 +128,8 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
                                                     it.child("gmail").value.toString(),)
                                                 friendslist.add(friend)
                                                 if (friendslist.size == frnd1.size -1) {
-                                                    println("done")
-                                                    println(friendslist)
+
+
                                                     getfriends(friendslist)
                                                 }
                                             }
@@ -146,6 +155,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
 
             Handler().postDelayed(Runnable {
                 swipeRefreshLayout.isRefreshing =false
+                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             },2000)
 
 
@@ -227,6 +237,8 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
         recyclerview.adapter = recyclerAdapter
         value = friendslist
+        println("value++++++"+value)
+        println("friednsasasdsad" +friendslist)
 
 
     }

@@ -32,6 +32,7 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
     private var REQUEST_CODE = 1
     private lateinit var imageuri:Uri
     private lateinit var storageReference:StorageReference
+    private lateinit var imguri:Uri
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,7 +49,14 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
         var fragmentManager = activity?.supportFragmentManager
         var fragmentTransaction = fragmentManager?.beginTransaction()
 
-         Glide.with(this.requireContext()).load(LoginFragment.MySingleton.imageuri!!).into(displayimg)
+
+        if (LoginFragment.MySingleton.imageuri !=null){
+            imguri = LoginFragment.MySingleton.imageuri!!
+
+        }
+        imageuri = imguri
+        Glide.with(this.requireContext()).load(imageuri).into(displayimg)
+
 
         displayuser.text = "${FirebaseAuth.getInstance().currentUser?.displayName}"
         imagebutton.setOnClickListener {
@@ -69,6 +77,11 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
 
 
         }
+
+
+
+
+
 
 
 
@@ -97,6 +110,8 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
             if (selectedImageUri != null) {
                 imageuri = selectedImageUri
                 uploadprofilepic()
+                imguri = imageuri
+
 
             }
         }
