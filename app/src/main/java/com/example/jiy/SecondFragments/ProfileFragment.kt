@@ -13,6 +13,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.example.jiy.FirstFragments.LoginFragment
+import com.example.jiy.FirstFragments.RegistrationFragment
 import com.example.jiy.MainActivity
 import com.example.jiy.R
 import com.google.firebase.auth.FirebaseAuth
@@ -40,7 +43,12 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
         passwordbutton = view.findViewById(R.id.profilechangepassword)
         signoutbutton = view.findViewById(R.id.logout)
 
-        displayimg
+        storageReference=FirebaseStorage.getInstance().getReference("users")
+
+        var fragmentManager = activity?.supportFragmentManager
+        var fragmentTransaction = fragmentManager?.beginTransaction()
+
+         Glide.with(this.requireContext()).load(LoginFragment.MySingleton.imageuri!!).into(displayimg)
 
         displayuser.text = "${FirebaseAuth.getInstance().currentUser?.displayName}"
         imagebutton.setOnClickListener {
@@ -52,8 +60,13 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
         }
         signoutbutton.setOnClickListener {
 
+            fragmentTransaction?.replace(R.id.container, LoginFragment())
+            fragmentTransaction?.addToBackStack(null)
+            fragmentTransaction?.commit()
+
             FirebaseAuth.getInstance().signOut()
-            activity?.onBackPressed()
+
+
 
         }
 

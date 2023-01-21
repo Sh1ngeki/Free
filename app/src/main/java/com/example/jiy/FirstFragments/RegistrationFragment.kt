@@ -72,8 +72,10 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
                                         FirebaseAuth.getInstance().currentUser?.updateProfile(profileUpdates)
                                             ?.addOnCompleteListener { task ->
                                                 if (task.isSuccessful) {
+
                                                     Toast.makeText(this@RegistrationFragment.requireContext(), "Welcome ${FirebaseAuth.getInstance().currentUser?.displayName}", Toast.LENGTH_SHORT).show()
-                                                    fragmentTransaction?.add(R.id.container, FullNavFragment())
+                                                    FirebaseAuth.getInstance().signOut()
+                                                    fragmentTransaction?.replace(R.id.container, LoginFragment())
                                                     fragmentTransaction?.commit()
                                                 }
                                             }

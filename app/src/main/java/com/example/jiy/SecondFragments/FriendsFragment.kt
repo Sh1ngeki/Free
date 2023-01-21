@@ -56,7 +56,12 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         storagereference = FirebaseStorage.getInstance().getReference("users")
         storage1 = FirebaseStorage.getInstance().getReference("default")
 
-        value = LoginFragment.MySingleton.data!!
+
+        if (LoginFragment.MySingleton.data !=null){
+            value = LoginFragment.MySingleton.data!!
+        }
+        println(value)
+
         friendslist = value
         recyclerAdapter = PersonRecyclerAdapter(friendslist)
         recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
