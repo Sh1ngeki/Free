@@ -1,6 +1,8 @@
 package com.example.jiy.SecondFragments
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences.Editor
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -12,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.jiy.FirstFragments.LoginFragment
 import com.example.jiy.Friends
 import com.example.jiy.MainActivity
 import com.example.jiy.PersonRecyclerAdapter
@@ -24,13 +27,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import android.content.SharedPreferences as SharedPreferences1
 
 class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
     private lateinit var recyclerAdapter: PersonRecyclerAdapter
     private lateinit var recyclerview: RecyclerView
-    private var friendslist = arrayListOf<Friends>()
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private var friendslist = arrayListOf<Friends>()
     private var database = FirebaseDatabase.getInstance()
     private lateinit var storagereference: StorageReference
     private lateinit var storage1: StorageReference
@@ -39,6 +43,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
     private var userref = database.getReference("users")
     private var userfriendlist1 = arrayListOf<String>()
     private var userfriendlist2 = arrayListOf<String>()
+    private  var value = arrayListOf<Friends>()
 
 
     private lateinit var addfriendsbutton:Button
@@ -51,7 +56,88 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         storagereference = FirebaseStorage.getInstance().getReference("users")
         storage1 = FirebaseStorage.getInstance().getReference("default")
 
+        value = LoginFragment.MySingleton.data!!
+        friendslist = value
+        recyclerAdapter = PersonRecyclerAdapter(friendslist)
+        recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
+        recyclerview.adapter = recyclerAdapter
+
+
         swipeRefreshLayout.setOnRefreshListener {
+            friendslist.clear()
+
+            println(FirebaseAuth.getInstance().uid)
+            userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).get().addOnSuccessListener {
+
+                if (it.exists()) {
+                    println("uid")
+
+                    frnd1 = it.child("friendsname").value as ArrayList<String>
+                    println("frnd"+frnd1)
+
+                    for (i in frnd1) {
+
+                        userref.child(i.trim()).get().addOnSuccessListener {
+                            if (it.exists() &&! i.trim().isEmpty()) {
+                                //vamowmebt aris tu ara atvirtuli useris foto
+                                storagereference.listAll()
+                                    .addOnSuccessListener { listResult ->
+                                        val items = listResult.items
+                                        var imageexistance = false
+                                        for (item in items) {
+                                            if (item.name.trim() == i.trim()) {
+                                                println("object exists")
+                                                imageexistance = true
+                                                storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
+                                                    val friend = Friends(
+                                                        uri.toString(),
+                                                        it.child("username").value.toString(),
+                                                        it.child("userid").value.toString(),
+                                                        it.child("gmail").value.toString(),)
+                                                    friendslist.add(friend)
+                                                    if (friendslist.size == frnd1.size -1) {
+                                                        println("done")
+                                                        println(friendslist)
+                                                        getfriends(friendslist)
+
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                        if (!imageexistance){
+                                            storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
+                                                val friend = Friends(
+                                                    uri.toString(),
+                                                    it.child("username").value.toString(),
+                                                    it.child("userid").value.toString(),
+                                                    it.child("gmail").value.toString(),)
+                                                friendslist.add(friend)
+                                                if (friendslist.size == frnd1.size -1) {
+                                                    println("done")
+                                                    println(friendslist)
+                                                    getfriends(friendslist)
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                    .addOnFailureListener {
+
+                                    }
+
+
+                            }
+                        }
+
+                    }
+
+                }
+
+
+
+            }
+
 
             Handler().postDelayed(Runnable {
                 swipeRefreshLayout.isRefreshing =false
@@ -62,92 +148,6 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
 
 
 
-        val postListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                friendslist.clear()
-
-                println(FirebaseAuth.getInstance().uid)
-                userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).get()
-                    .addOnSuccessListener {
-
-                        if (it.exists()) {
-                            println("uid")
-
-                            frnd1 = it.child("friendsname").value as ArrayList<String>
-                            println("frnd"+frnd1)
-                            var n = 0
-                            for (i in frnd1) {
-                                n += 1
-                                userref.child(i.trim()).get().addOnSuccessListener {
-                                    if (it.exists() &&! i.trim().isEmpty()) {
-                                        //vamowmebt aris tu ara atvirtuli useris foto
-                                        storagereference.listAll()
-                                            .addOnSuccessListener { listResult ->
-                                                val items = listResult.items
-                                                var imageexistance = false
-                                                for (item in items) {
-                                                    if (item.name.trim() == i.trim()) {
-                                                        println("object exists")
-                                                        imageexistance = true
-                                                        storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
-                                                            val friend = Friends(
-                                                                uri.toString(),
-                                                                it.child("username").value.toString(),
-                                                                it.child("userid").value.toString(),
-                                                                it.child("gmail").value.toString(),)
-                                                            friendslist.add(friend)
-                                                            if (n == frnd1.size) {
-                                                                println("done")
-                                                                println(friendslist)
-                                                                getfriends(friendslist)
-
-                                                            }
-                                                        }
-                                                    }
-
-                                                }
-                                                if (!imageexistance){
-                                                    storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
-                                                        val friend = Friends(
-                                                            uri.toString(),
-                                                            it.child("username").value.toString(),
-                                                            it.child("userid").value.toString(),
-                                                            it.child("gmail").value.toString(),)
-                                                        friendslist.add(friend)
-                                                        if (n == frnd1.size) {
-                                                            println("done")
-                                                            println(friendslist)
-                                                            getfriends(friendslist)
-                                                        }
-                                                    }
-
-                                                }
-                                            }
-                                            .addOnFailureListener {
-
-                                            }
-
-
-                                    }
-                                }
-
-                            }
-
-                        }
-
-
-                    }
-
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Failed to read value
-                Log.w("ValueEventListener", "loadPost:onCancelled", databaseError.toException())
-            }
-        }
-        userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).addValueEventListener(postListener)
         //megobrebis damateba
         addfriendsbutton.setOnClickListener {
 
@@ -221,6 +221,8 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         recyclerAdapter = PersonRecyclerAdapter(friendslist)
         recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
         recyclerview.adapter = recyclerAdapter
+        value = friendslist
+
 
     }
 

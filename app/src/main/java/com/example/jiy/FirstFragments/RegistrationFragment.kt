@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.jiy.FullNavFragment
 import com.example.jiy.HomeActivity
 import com.example.jiy.R
 import com.example.jiy.SecondFragments.ProfileFragment
@@ -32,6 +33,8 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.registration_fragment, container, false)
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
         backSignIn1 = view.findViewById(R.id.backSignIn1)
         emailtext = view.findViewById(R.id.regmail)
         pass1text=view.findViewById(R.id.regpass1)
@@ -70,7 +73,8 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
                                             ?.addOnCompleteListener { task ->
                                                 if (task.isSuccessful) {
                                                     Toast.makeText(this@RegistrationFragment.requireContext(), "Welcome ${FirebaseAuth.getInstance().currentUser?.displayName}", Toast.LENGTH_SHORT).show()
-                                                    startActivity(Intent(this@RegistrationFragment.requireContext(), HomeActivity::class.java ))
+                                                    fragmentTransaction?.add(R.id.container, FullNavFragment())
+                                                    fragmentTransaction?.commit()
                                                 }
                                             }
 
@@ -101,8 +105,7 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
 
 
         backSignIn1.setOnClickListener{
-            val fragmentManager = activity?.supportFragmentManager
-            val fragmentTransaction = fragmentManager?.beginTransaction()
+
             fragmentTransaction?.replace(R.id.container, LoginFragment())
             fragmentTransaction?.addToBackStack(null)
             fragmentTransaction?.commit()
