@@ -53,11 +53,11 @@
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/dapostvaze_mchirdeba"
-            android:text="Add"
+            android:text="ADD"
             android:textColor="@color/black"
-            android:fontFamily="@font/kai4"
-            android:textSize="26sp"/>
+            android:backgroundTint="#4A148C"
+            android:fontFamily="@font/kai2"
+            android:textSize="22sp"/>
 
     </LinearLayout>
 
