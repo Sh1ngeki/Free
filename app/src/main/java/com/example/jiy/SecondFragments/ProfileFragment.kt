@@ -33,10 +33,10 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
     private lateinit var imageuri:Uri
     private lateinit var storageReference:StorageReference
     private lateinit var imguri:Uri
+    private var already = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         displayuser = view.findViewById(R.id.profileusername)
         displayimg = view.findViewById(R.id.profilePic)
@@ -91,11 +91,10 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
 
         storageReference = FirebaseStorage.getInstance().getReference("users/"+FirebaseAuth.getInstance().currentUser?.displayName.toString())
         storageReference.putFile(imageuri).addOnSuccessListener {
-            Toast.makeText(this.requireContext(), "image uploaded", Toast.LENGTH_SHORT).show()
 
 
         }.addOnFailureListener {
-            Toast.makeText(this.requireContext(), "error", Toast.LENGTH_SHORT).show()
+
         }
     }
 
@@ -109,8 +108,10 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
             displayimg.setImageURI(selectedImageUri)
             if (selectedImageUri != null) {
                 imageuri = selectedImageUri
-                uploadprofilepic()
                 imguri = imageuri
+                uploadprofilepic()
+
+
 
 
             }
