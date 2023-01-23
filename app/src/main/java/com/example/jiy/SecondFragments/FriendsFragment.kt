@@ -71,9 +71,9 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         println(value)
 
 
-            recyclerAdapter = PersonRecyclerAdapter(friendslist1)
-            recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
-            recyclerview.adapter = recyclerAdapter
+        recyclerAdapter = PersonRecyclerAdapter(friendslist1)
+        recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
+        recyclerview.adapter = recyclerAdapter
 
 
         swipeRefreshLayout.setOnRefreshListener {

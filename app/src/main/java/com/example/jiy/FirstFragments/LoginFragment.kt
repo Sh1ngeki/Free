@@ -1,5 +1,6 @@
 package com.example.jiy.FirstFragments
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -37,14 +38,20 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
 
     private var friendslist = arrayListOf<Friends>()
     private var database = FirebaseDatabase.getInstance()
-    private lateinit var storagereference: StorageReference
-    private lateinit var storage1: StorageReference
+
     private lateinit var frnd1:ArrayList<String>
     private lateinit var addfriendstxt:EditText
     private var userref = database.getReference("users")
 
+    private var storagereference = FirebaseStorage.getInstance().getReference("users")
+    private var storage1 = FirebaseStorage.getInstance().getReference("default")
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.login_fragment, container, false)
+
+        val preferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = preferences?.edit()
+
 
 
         var fragmentManager = activity?.supportFragmentManager
@@ -69,91 +76,63 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
             fragmentTransaction?.add(R.id.container, ForgotPasswordFragment())
             fragmentTransaction?.commit()
         }
-        button.setOnClickListener {
-            val mail = loginmail.text.toString()
-            val pass = loginpass.text.toString()
-            if (mail.isEmpty() ||pass.isEmpty()){
 
-            }else {
+        println(FirebaseAuth.getInstance().currentUser)
+        if (FirebaseAuth.getInstance().currentUser !=null){
+            val mail = preferences?.getString("email", "")
+            val pass = preferences?.getString("password", "")
+            println("saaaaaaaaaaaaaaa$mail$pass")
 
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(mail, pass)
-                    .addOnSuccessListener {
-                        Toast.makeText(
-                            this@LoginFragment.requireContext(),
-                            "Welcome",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        println(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(mail!!, pass!!)
+                .addOnSuccessListener {
+                    Toast.makeText(
+                        this@LoginFragment.requireContext(),
+                        "Welcome",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    println(FirebaseAuth.getInstance().currentUser?.displayName.toString())
 
-                        friendslist.clear()
+                    friendslist.clear()
 
-                        println(FirebaseAuth.getInstance().uid)
-                        userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).get()
-                            .addOnSuccessListener {
+                    println(FirebaseAuth.getInstance().uid)
+                    userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).get()
+                        .addOnSuccessListener {
 
-                                if (it.exists()) {
-                                    println("uid")
+                            if (it.exists()) {
+                                println("uid")
 
-                                    frnd1 = it.child("friendsname").value as ArrayList<String>
-                                    println("frnd"+frnd1)
-                                    println(frnd1.size)
-                                    if (frnd1.size==1) {
-                                        MySingleton.data = arrayListOf()
-                                        loadprofileimage()
-                                        Thread.sleep(1000)
-                                        fragmentTransaction?.replace(
-                                            R.id.container,
-                                            FullNavFragment()
+                                frnd1 = it.child("friendsname").value as ArrayList<String>
+                                println("frnd"+frnd1)
+                                println(frnd1.size)
+                                if (frnd1.size==1) {
+                                    MySingleton.data = arrayListOf()
+                                    loadprofileimage()
+                                    Thread.sleep(100)
+                                    fragmentTransaction?.replace(
+                                        R.id.container,
+                                        FullNavFragment()
 
-                                        )
-                                        println("datanull")
+                                    )
+                                    println("datanull")
 
-                                        fragmentTransaction?.commit()
+                                    fragmentTransaction?.commit()
 
-                                    }else {
-                                        for (i in frnd1) {
+                                }else {
+                                    for (i in frnd1) {
 
-                                            userref.child(i.trim()).get().addOnSuccessListener {
-                                                if (it.exists() && !i.trim().isEmpty()) {
-                                                    //vamowmebt aris tu ara atvirtuli useris foto
+                                        userref.child(i.trim()).get().addOnSuccessListener {
+                                            if (it.exists() && !i.trim().isEmpty()) {
+                                                //vamowmebt aris tu ara atvirtuli useris foto
 
-                                                    storagereference.listAll()
-                                                        .addOnSuccessListener { listResult ->
-                                                            val items = listResult.items
-                                                            var imageexistance = false
-                                                            for (item in items) {
-                                                                if (item.name.trim() == i.trim()) {
-                                                                    println("object exists")
-                                                                    imageexistance = true
-                                                                    storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
-                                                                        val friend = Friends(
-                                                                            uri.toString(),
-                                                                            it.child("username").value.toString(),
-                                                                            it.child("userid").value.toString(),
-                                                                            it.child("gmail").value.toString(),
-                                                                        )
-                                                                        friendslist.add(friend)
-                                                                        if (friendslist.size == frnd1.size - 1) {
-                                                                            println("done")
-                                                                            println(friendslist)
-
-                                                                            MySingleton.data =
-                                                                                friendslist
-                                                                            loadprofileimage()
-                                                                            Thread.sleep(2000)
-                                                                            fragmentTransaction?.replace(
-                                                                                R.id.container,
-                                                                                FullNavFragment()
-                                                                            )
-                                                                            fragmentTransaction?.commit()
-
-                                                                        }
-                                                                    }
-                                                                }
-
-                                                            }
-                                                            if (!imageexistance) {
-                                                                storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
+                                                storagereference.listAll()
+                                                    .addOnSuccessListener { listResult ->
+                                                        val items = listResult.items
+                                                        var imageexistance = false
+                                                        for (item in items) {
+                                                            if (item.name.trim() == i.trim()) {
+                                                                println("object exists")
+                                                                imageexistance = true
+                                                                storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
                                                                     val friend = Friends(
                                                                         uri.toString(),
                                                                         it.child("username").value.toString(),
@@ -164,45 +143,224 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                     if (friendslist.size == frnd1.size - 1) {
                                                                         println("done")
                                                                         println(friendslist)
-                                                                        loadprofileimage()
+
                                                                         MySingleton.data =
                                                                             friendslist
-
+                                                                        loadprofileimage()
+                                                                        Thread.sleep(200)
                                                                         fragmentTransaction?.replace(
                                                                             R.id.container,
                                                                             FullNavFragment()
                                                                         )
                                                                         fragmentTransaction?.commit()
 
+
                                                                     }
                                                                 }
-
                                                             }
-                                                        }
-                                                        .addOnFailureListener {
 
                                                         }
+                                                        if (!imageexistance) {
+                                                            storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
+                                                                val friend = Friends(
+                                                                    uri.toString(),
+                                                                    it.child("username").value.toString(),
+                                                                    it.child("userid").value.toString(),
+                                                                    it.child("gmail").value.toString(),
+                                                                )
+                                                                friendslist.add(friend)
+                                                                if (friendslist.size == frnd1.size - 1) {
+                                                                    println("done")
+                                                                    println(friendslist)
+                                                                    loadprofileimage()
+                                                                    MySingleton.data =
+                                                                        friendslist
+                                                                    Thread.sleep(200)
+                                                                    fragmentTransaction?.replace(
+                                                                        R.id.container,
+                                                                        FullNavFragment()
+                                                                    )
+                                                                    fragmentTransaction?.commit()
 
-                                                }
+
+                                                                }
+                                                            }
+
+                                                        }
+                                                    }
+                                                    .addOnFailureListener {
+
+                                                    }
+
                                             }
-
                                         }
+
                                     }
                                 }
-
                             }
 
+                        }
 
-                    }
+
+                }
+
+        }else {
+
+
+            button.setOnClickListener {
+                val mail = loginmail.text.toString()
+                val pass = loginpass.text.toString()
+                if (mail.isEmpty() || pass.isEmpty()) {
+
+                } else {
+
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(mail, pass)
+                        .addOnSuccessListener {
+                            Toast.makeText(
+                                this@LoginFragment.requireContext(),
+                                "Welcome",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            println(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+
+                            friendslist.clear()
+
+                            println(FirebaseAuth.getInstance().uid)
+                            userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+                                .get()
+                                .addOnSuccessListener {
+
+                                    if (it.exists()) {
+                                        println("uid")
+
+                                        frnd1 = it.child("friendsname").value as ArrayList<String>
+                                        println("frnd" + frnd1)
+                                        println(frnd1.size)
+                                        if (frnd1.size == 1) {
+                                            MySingleton.data = arrayListOf()
+                                            loadprofileimage()
+                                            Thread.sleep(1000)
+                                            fragmentTransaction?.replace(
+                                                R.id.container,
+                                                FullNavFragment()
+
+                                            )
+                                            println("datanull")
+
+                                            fragmentTransaction?.commit()
+
+                                        } else {
+                                            for (i in frnd1) {
+
+                                                userref.child(i.trim()).get().addOnSuccessListener {
+                                                    if (it.exists() && !i.trim().isEmpty()) {
+                                                        //vamowmebt aris tu ara atvirtuli useris foto
+
+                                                        storagereference.listAll()
+                                                            .addOnSuccessListener { listResult ->
+                                                                val items = listResult.items
+                                                                var imageexistance = false
+                                                                for (item in items) {
+                                                                    if (item.name.trim() == i.trim()) {
+                                                                        println("object exists")
+                                                                        imageexistance = true
+                                                                        storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
+                                                                            val friend = Friends(
+                                                                                uri.toString(),
+                                                                                it.child("username").value.toString(),
+                                                                                it.child("userid").value.toString(),
+                                                                                it.child("gmail").value.toString(),
+                                                                            )
+                                                                            friendslist.add(friend)
+                                                                            if (friendslist.size == frnd1.size - 1) {
+                                                                                println("done")
+                                                                                println(friendslist)
+
+                                                                                MySingleton.data =
+                                                                                    friendslist
+                                                                                loadprofileimage()
+                                                                                Thread.sleep(2000)
+                                                                                fragmentTransaction?.replace(
+                                                                                    R.id.container,
+                                                                                    FullNavFragment()
+                                                                                )
+                                                                                fragmentTransaction?.commit()
+                                                                                editor?.putString(
+                                                                                    "email",
+                                                                                    mail
+                                                                                )
+                                                                                editor?.putString(
+                                                                                    "password",
+                                                                                    pass
+                                                                                )
+                                                                                editor?.apply()
+
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                }
+                                                                if (!imageexistance) {
+                                                                    storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
+                                                                        val friend = Friends(
+                                                                            uri.toString(),
+                                                                            it.child("username").value.toString(),
+                                                                            it.child("userid").value.toString(),
+                                                                            it.child("gmail").value.toString(),
+                                                                        )
+                                                                        friendslist.add(friend)
+                                                                        if (friendslist.size == frnd1.size - 1) {
+                                                                            println("done")
+                                                                            println(friendslist)
+                                                                            loadprofileimage()
+                                                                            MySingleton.data =
+                                                                                friendslist
+
+                                                                            fragmentTransaction?.replace(
+                                                                                R.id.container,
+                                                                                FullNavFragment()
+                                                                            )
+                                                                            fragmentTransaction?.commit()
+
+
+                                                                            editor?.putString(
+                                                                                "email",
+                                                                                mail
+                                                                            )
+                                                                            editor?.putString(
+                                                                                "password",
+                                                                                pass
+                                                                            )
+                                                                            editor?.apply()
+
+                                                                        }
+                                                                    }
+
+                                                                }
+                                                            }
+                                                            .addOnFailureListener {
+
+                                                            }
+
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    }
+
+                                }
+
+
+                        }
+                }
+
             }
-
         }
 
 
         return view
     }
-
-
 
 
 
@@ -260,7 +418,6 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
         var imageuri: Uri? = null
     }
 
-// In the first fragment:
 
 
 

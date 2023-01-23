@@ -1,5 +1,6 @@
 package com.example.jiy.SecondFragments
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -52,10 +53,10 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
 
         if (LoginFragment.MySingleton.imageuri !=null){
             imguri = LoginFragment.MySingleton.imageuri!!
-
+            imageuri = imguri
+            Glide.with(this.requireContext()).load(imageuri).into(displayimg)
         }
-        imageuri = imguri
-        Glide.with(this.requireContext()).load(imageuri).into(displayimg)
+
 
 
         displayuser.text = "${FirebaseAuth.getInstance().currentUser?.displayName}"
@@ -73,6 +74,10 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
             fragmentTransaction?.commit()
 
             FirebaseAuth.getInstance().signOut()
+            val preferences = activity?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+            val editor = preferences?.edit()
+            editor?.clear()
+            editor?.apply()
 
 
 
@@ -108,7 +113,6 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
             displayimg.setImageURI(selectedImageUri)
             if (selectedImageUri != null) {
                 imageuri = selectedImageUri
-                imguri = imageuri
                 uploadprofilepic()
 
 
