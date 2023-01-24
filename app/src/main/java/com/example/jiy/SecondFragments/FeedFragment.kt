@@ -12,7 +12,7 @@ import com.example.jiy.viewpager.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class FeedFragment : Fragment() {
+class FeedFragment : Fragment(R.layout.feed_fragment) {
 
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout

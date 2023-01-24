@@ -1,8 +1,6 @@
 package com.example.jiy.FirstFragments
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.jiy.FullNavFragment
-import com.example.jiy.HomeActivity
 import com.example.jiy.R
-import com.example.jiy.SecondFragments.ProfileFragment
 import com.example.jiy.Users
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
