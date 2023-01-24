@@ -2,8 +2,8 @@ package com.example.jiy.viewpager
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.jiy.Loading.FirstPage
-import com.example.jiy.Loading.SecondPage
+import com.example.jiy.viewpagerpages.FirstPage
+import com.example.jiy.viewpagerpages.SecondPage
 
 class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
