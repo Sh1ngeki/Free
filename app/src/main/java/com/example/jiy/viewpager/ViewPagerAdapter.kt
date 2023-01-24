@@ -21,9 +21,9 @@ class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     fun getPageTitle(position: Int): String {
         return when (position) {
-            0 -> "discovery"
-            1 -> "friends"
-            else -> "discovery"
+            0 -> "Discovery"
+            1 -> "Friends"
+            else -> "Discovery"
         }
     }
 }
