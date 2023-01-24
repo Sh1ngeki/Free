@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal"
+    android:padding="20dp"
+    android:layout_height="wrap_content">
+    <ProgressBar
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="#616060"
+        android:layout_weight="1"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:textSize="27sp"
+        android:text="Loading..."
+        android:gravity="start|center_vertical"/>
+
+</LinearLayout>

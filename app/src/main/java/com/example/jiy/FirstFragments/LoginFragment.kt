@@ -1,10 +1,9 @@
 package com.example.jiy.FirstFragments
 
+import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,21 +12,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.bumptech.glide.Glide
 import com.example.jiy.Friends
 import com.example.jiy.FullNavFragment
-import com.example.jiy.HomeActivity
 import com.example.jiy.R
-import com.example.jiy.SecondFragments.FriendsFragment
-import com.example.jiy.SecondFragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 
 
 class LoginFragment:Fragment(R.layout.login_fragment) {
@@ -83,7 +73,12 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
             val mail = preferences?.getString("email", "")
             val pass = preferences?.getString("password", "")
             println("saaaaaaaaaaaaaaa$mail$pass")
-
+            if(mail !="" &&pass!=""){
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setCancelable(false)
+                builder.setView(R.layout.loading_fragment)
+                val dialog = builder.create()
+                dialog.show()
             FirebaseAuth.getInstance().signInWithEmailAndPassword(mail!!, pass!!)
                 .addOnSuccessListener {
                     Toast.makeText(
@@ -117,7 +112,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                     println("datanull")
 
                                     fragmentTransaction?.commit()
-
+                                    dialog.dismiss()
                                 }else {
                                     for (i in frnd1) {
 
@@ -154,7 +149,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                             FullNavFragment()
                                                                         )
                                                                         fragmentTransaction?.commit()
-
+                                                                        dialog.dismiss()
 
                                                                     }
                                                                 }
@@ -182,14 +177,16 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                         FullNavFragment()
                                                                     )
                                                                     fragmentTransaction?.commit()
-
+                                                                    dialog.dismiss()
 
                                                                 }
                                                             }
 
                                                         }
+
                                                     }
                                                     .addOnFailureListener {
+                                                        dialog.dismiss()
 
                                                     }
 
@@ -204,6 +201,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
 
 
                 }
+            }
 
         }else {
 
@@ -338,6 +336,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                     }
 
                                                                 }
+
                                                             }
                                                             .addOnFailureListener {
 
