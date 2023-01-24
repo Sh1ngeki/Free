@@ -23,7 +23,7 @@ class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
         return when (position) {
             0 -> "Discovery"
             1 -> "Friends"
-            else -> "Discovery"
+            else -> "Friends"
         }
     }
 }

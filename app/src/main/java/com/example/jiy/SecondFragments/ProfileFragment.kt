@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -34,6 +35,7 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
     private lateinit var imageuri:Uri
     private lateinit var storageReference:StorageReference
     private lateinit var imguri:Uri
+    private lateinit var abouttxt:TextView
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +46,7 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
         imagebutton = view.findViewById(R.id.changeimage)
         passwordbutton = view.findViewById(R.id.profilechangepassword)
         signoutbutton = view.findViewById(R.id.logout)
-
+        abouttxt = view.findViewById(R.id.abouttext)
         storageReference=FirebaseStorage.getInstance().getReference("users")
 
         var fragmentManager = activity?.supportFragmentManager
@@ -89,6 +91,13 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
 
 
 
+        abouttxt.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setCancelable(true)
+            builder.setView(R.layout.about_app)
+            val dialog = builder.create()
+            dialog.show()
+        }
 
 
 
