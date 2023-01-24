@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/kai"
         android:gravity="center"
         android:text="Welcome to Jiyū"
@@ -23,10 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/kai2"
-        android:text="Jiyū is an android social media app which is customized for you, where you can search or recommend to others different genres of movies, series, cartoons or even anime. Have a bad day? Do you want to watch something and you don't know what? just open up Jiyū, sit back and search in feed anything what you want, you can also post and people around the world will comment to recommend some good movies!"
+        android:text="Jiyū is an android social media app which is customized for you, where you can search or recommend to others different genres of movies, series, cartoons or even anime. You just have to post
+ and people around the world will comment to recommend some good movies! "
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +40,7 @@
         android:text="Just enjoy with it!"
         android:textSize="27sp"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
