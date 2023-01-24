@@ -58,15 +58,21 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         storage1 = FirebaseStorage.getInstance().getReference("default")
 
         println(value)
-
-        if (LoginFragment.MySingleton.data !=null){
+        println(Mydata.friendsdata)
+        if (!Mydata.friendsdata.isEmpty()){
+            value = Mydata.friendsdata
+            println("ashahjsajshjahsjahsaj")
+            println(value)
+            println("ashahjsajshjahsjahsaj")
+        }else if (LoginFragment.MySingleton.data !=null){
             println("aeiieieiejdeidjiejdiejdi"+LoginFragment.MySingleton.data!!)
             value = LoginFragment.MySingleton.data!!
-            println("login "+ value)
 
-            println("loginvalue")
 
         }
+
+
+
         friendslist1 = value
         println(value)
 
@@ -239,6 +245,14 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         recyclerview.adapter = recyclerAdapter
         println("value++++++"+value)
         println("friednsasasdsad" +friendslist)
+        Mydata.friendsdata = friendslist
+
+
+    }
+    object Mydata{
+        var friendsdata :ArrayList<Friends> = arrayListOf()
+
+
 
 
     }

@@ -34,7 +34,7 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
     private lateinit var imageuri:Uri
     private lateinit var storageReference:StorageReference
     private lateinit var imguri:Uri
-    private var already = false
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,8 +50,12 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
         var fragmentManager = activity?.supportFragmentManager
         var fragmentTransaction = fragmentManager?.beginTransaction()
 
+        if (imagedata.imagedata!=null){
+            println("imageeeeee")
+            Glide.with(this.requireContext()).load(imagedata.imagedata).into(displayimg)
+        }
 
-        if (LoginFragment.MySingleton.imageuri !=null){
+        else if (LoginFragment.MySingleton.imageuri !=null){
             imguri = LoginFragment.MySingleton.imageuri!!
             imageuri = imguri
             Glide.with(this.requireContext()).load(imageuri).into(displayimg)
@@ -114,11 +118,17 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
             if (selectedImageUri != null) {
                 imageuri = selectedImageUri
                 uploadprofilepic()
+                imagedata.imagedata = imageuri
 
 
 
 
             }
         }
+    }
+
+    object imagedata{
+        var imagedata:Uri? = null
+
     }
 }
