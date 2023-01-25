@@ -49,13 +49,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profilePic"
             android:layout_width="230dp"
             android:layout_height="230dp"
             android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/circle"
             android:src="@drawable/img_4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
