@@ -27,6 +27,7 @@ Jiyū is an android social media app which came to life thanks to the Firebase A
 - Profile pictures are stored in the Firebase Storage.
 - Posts: description, the current user & their profile picture are stored in Firebase Realtime Database.
 - Alert dialogs are used on sensitive cases such as changing the password, uploading the post , as well as loading screens.
+- ![third](https://user-images.githubusercontent.com/115181439/214705115-e687d31e-a148-41a1-b373-a9757bbf00c8.png)
 
 
 ## これは自由です
