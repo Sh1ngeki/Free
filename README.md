@@ -28,3 +28,4 @@ Jiyū is an android social media app which came to life thanks to the Firebase A
 
 
 ## これは自由です
+![txa](https://user-images.githubusercontent.com/115181439/214595675-81ea26de-6e34-4909-973f-dc3b1be8342c.jpg)
