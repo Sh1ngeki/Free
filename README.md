@@ -27,4 +27,4 @@ Jiyū is an android social media app which came to life thanks to the Firebase A
 - Alert dialogs are used on sensitive cases such as changing the password, uploading the post , as well as loading screens.
 
 
-## HOPE YOU ENJOY OUR APP 
+## これは自由です
