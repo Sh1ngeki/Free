@@ -1,5 +1,6 @@
 package com.example.jiy.viewpagerpages
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -55,6 +56,18 @@ class FirstPage:Fragment(R.layout.friends_page) {
         recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
         recyclerview.adapter = recyclerAdapter
         val window = requireActivity().window
+
+
+        recyclerAdapter.onitemclick={
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setCancelable(true)
+            builder.setView(R.layout.comment_layout)
+            val dialog = builder.create()
+            dialog.show()
+            SecondPage.commentdata.commentText= it.user
+
+
+        }
 
         userref = FirebaseDatabase.getInstance().getReference("users")
         refreshLayout =view.findViewById(R.id.refresh2)
