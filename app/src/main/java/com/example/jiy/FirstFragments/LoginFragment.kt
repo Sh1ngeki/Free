@@ -38,6 +38,8 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
     private lateinit var addfriendstxt:EditText
     private var userref = database.getReference("users")
     private var postclassarray = ArrayList<PostClass>()
+    private var postclassarray1 = ArrayList<PostClass>()
+
 
     private var storagereference = FirebaseStorage.getInstance().getReference("users")
     private var storage1 = FirebaseStorage.getInstance().getReference("default")
@@ -70,6 +72,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
         forgotPassword.setOnClickListener {
 
             fragmentTransaction?.add(R.id.container, ForgotPasswordFragment())
+            fragmentTransaction?.addToBackStack(null)
             fragmentTransaction?.commit()
         }
 
@@ -149,7 +152,96 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                         }
 
                     }
-                    Thread.sleep(1000)
+
+                    userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+                        .get().addOnSuccessListener {kai->
+                            if (kai.exists()){
+                                val posterfriends = kai.child("friendsname").value as ArrayList<String>
+                                println(posterfriends)
+                                println("bjobjo megobari")
+                                for(i in posterfriends){
+                                    if (i.length>1) {
+                                        userref.child(i.trim()).child("posts").get()
+                                            .addOnSuccessListener { pos1 ->
+                                                if (pos1.exists()) {
+                                                    println("bjobjo $pos1")
+
+                                                    val allpost = pos1.value as ArrayList<String>
+                                                    println("bijooo$allpost")
+                                                    for (k in allpost) {
+                                                        storagereference.listAll()
+                                                            .addOnSuccessListener { listResult ->
+                                                                val items = listResult.items
+                                                                var imageexistance = false
+                                                                for (item in items) {
+                                                                    if (item.name.trim() == i.trim()) {
+                                                                        println("object exists")
+                                                                        imageexistance = true
+                                                                        storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
+                                                                            if (k.length > 1) {
+                                                                                val post =
+                                                                                    PostClass(
+                                                                                        k,
+                                                                                        i.trim(),
+                                                                                        uri
+                                                                                    )
+                                                                                postclassarray1.add(
+                                                                                    post
+                                                                                )
+                                                                                println(
+                                                                                    postclassarray1
+                                                                                )
+                                                                                println("megobrebtan ertad")
+                                                                                MySingleton.friendpost =
+                                                                                    postclassarray1
+
+                                                                                dialog.dismiss()
+                                                                            }
+                                                                        }
+
+
+                                                                    }
+                                                                }
+                                                                if (!imageexistance) {
+                                                                    println("araaaaaaaaaaaraaaaaaaaa")
+                                                                    storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
+                                                                        if (k.length > 1) {
+                                                                            val post =
+                                                                                PostClass(
+                                                                                    k,
+                                                                                    i.trim(),
+                                                                                    uri
+                                                                                )
+                                                                            postclassarray1.add(post)
+                                                                            println(postclassarray1)
+                                                                            println("aeaseaesesaes")
+                                                                            MySingleton.friendpost =
+                                                                                postclassarray1
+                                                                            dialog.dismiss()
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                    }
+
+
+                                                }
+
+
+                                            }
+
+                                    }
+                                }
+
+                            }
+
+
+                        }
+
+                    Thread.sleep(3000)
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(mail!!, pass!!)
                         .addOnSuccessListener {
                             Toast.makeText(
@@ -321,6 +413,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
 
                                             )
                                             println("datanull")
+                                            Thread.sleep(2000)
 
                                             fragmentTransaction?.commit()
 
@@ -354,7 +447,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                                 MySingleton.data =
                                                                                     friendslist
                                                                                 loadprofileimage()
-                                                                                Thread.sleep(200)
+                                                                                Thread.sleep(2000)
                                                                                 fragmentTransaction?.replace(
                                                                                     R.id.container,
                                                                                     FullNavFragment()
@@ -382,7 +475,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                             loadprofileimage()
                                                                             MySingleton.data =
                                                                                 friendslist
-                                                                            Thread.sleep(200)
+                                                                            Thread.sleep(2000)
                                                                             fragmentTransaction?.replace(
                                                                                 R.id.container,
                                                                                 FullNavFragment()
@@ -476,6 +569,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
         var data: ArrayList<Friends>? = null
         var imageuri: Uri? = null
         var postdata:ArrayList<PostClass>?=null
+        var friendpost:ArrayList<PostClass>?=null
     }
 
 

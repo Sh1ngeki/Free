@@ -21,18 +21,16 @@ class ForgotPasswordFragment:Fragment(R.layout.forgot_password_fragment) {
         backSignIn2 = view.findViewById(R.id.backSignIn2)
         forgormail = view.findViewById(R.id.forgormail)
         forgorbutton = view.findViewById(R.id.forgorbutton)
-
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
         backSignIn2.setOnClickListener{
-            val fragmentManager = activity?.supportFragmentManager
-            val fragmentTransaction = fragmentManager?.beginTransaction()
+
             fragmentTransaction?.replace(R.id.container, LoginFragment())
             fragmentTransaction?.addToBackStack(null)
             fragmentTransaction?.commit()
         }
         forgorbutton.setOnClickListener {
             if (forgormail.text.isEmpty()){
-                forgormail.hint = "Enter E-mail"
-                Toast.makeText(this.requireContext(), "Check E-mail", Toast.LENGTH_SHORT).show()
             }else {
                 FirebaseAuth.getInstance().sendPasswordResetEmail(forgormail.text.toString())
                     .addOnSuccessListener { Toast.makeText(this.requireContext(), "Check E-mail", Toast.LENGTH_SHORT).show()}
@@ -41,9 +39,7 @@ class ForgotPasswordFragment:Fragment(R.layout.forgot_password_fragment) {
                     }
             }
         }
-        forgormail.setOnClickListener {
-            forgormail.hint=""
-        }
+
 
 
         return view

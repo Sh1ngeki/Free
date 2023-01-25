@@ -42,10 +42,11 @@ class SecondPage:Fragment(R.layout.discovery_page) {
         val view =inflater.inflate(R.layout.discovery_page,container,false)
         println("aeebdebdhebdheb ${LoginFragment.MySingleton.postdata}")
         recyclerview = view.findViewById(R.id.recycle1)
-        if (postdata.posts!=null){
+        if (postdata.posts!=null && postdata.posts!!.isNotEmpty()){
             postclassarray = postdata.posts!!
 
         }
+        else
         if (LoginFragment.MySingleton.postdata!=null) {
             value = LoginFragment.MySingleton.postdata!!
             println("ashahjsajshjahsjahsaj")
@@ -58,7 +59,7 @@ class SecondPage:Fragment(R.layout.discovery_page) {
         recyclerAdapter = PostRecyclerAdapter(postclassarray)
         recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
         recyclerview.adapter = recyclerAdapter
-
+        val window = requireActivity().window
 
         userref = FirebaseDatabase.getInstance().getReference("users")
         refreshLayout =view.findViewById(R.id.refresh1)
@@ -66,7 +67,7 @@ class SecondPage:Fragment(R.layout.discovery_page) {
         storagereference=FirebaseStorage.getInstance().getReference("users")
         refreshLayout.setOnRefreshListener {
             postclassarray.clear()
-            val window = requireActivity().window
+
             window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             userref.child("everyone").get().addOnSuccessListener {
                 if (it.exists()){
@@ -169,5 +170,6 @@ class SecondPage:Fragment(R.layout.discovery_page) {
     object postdata{
         var posts :ArrayList<PostClass>?=null
     }
+
 
 }
