@@ -9,6 +9,7 @@ Jiyū is an android social media app which came to life thanks to the Firebase A
 
 
 ## WHAT IS POSSIBLE IN OUR APP?
+![second](https://user-images.githubusercontent.com/115181439/214704330-a9e6f048-4880-4af5-bd09-989627bb09ea.png)
 - Users can change their profile picture from the profile.
 - Users can upload posts with description.
 - After uploading the post, it will appear on the feed with the user's profile picture and username.
