@@ -44,10 +44,20 @@ class PostFragment:Fragment(R.layout.post_fragment) {
                 builder.setMessage("This is the message of the dialog.")
                 builder.setPositiveButton("Yes") { dialog, _ ->
                     dialog.dismiss()
-                    postarray.add(posttext.text.toString())
-                    databaseReference.child(FirebaseAuth.getInstance().currentUser?.displayName.toString())
-                        .child("posts").setValue(postarray)
-                        .addOnSuccessListener { posttext.setText("") }
+                    databaseReference.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).child("posts").get().addOnSuccessListener {
+                        if (it.exists()){
+                            postarray = it.value as ArrayList<String>
+
+                            postarray.add(posttext.text.toString())
+                            databaseReference.child(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+                                .child("posts").setValue(postarray)
+                                .addOnSuccessListener { posttext.setText("") }
+
+
+                        }
+                    }
+
+
 
 
 
