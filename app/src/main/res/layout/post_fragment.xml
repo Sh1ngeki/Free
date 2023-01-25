@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
+                android:id="@+id/posttext"
                 android:layout_height="100dp"
                 android:fontFamily="@font/kai3"
                 android:hint="Post anything"
@@ -65,6 +66,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/postbutton"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:background="@drawable/inappbuttons"
