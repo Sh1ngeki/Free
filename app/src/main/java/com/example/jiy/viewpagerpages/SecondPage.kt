@@ -69,6 +69,7 @@ class SecondPage:Fragment(R.layout.discovery_page) {
         refreshLayout.setOnRefreshListener {
             postclassarray.clear()
 
+
             window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             userref.child("everyone").get().addOnSuccessListener {
                 if (it.exists()){
