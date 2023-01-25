@@ -6,16 +6,28 @@
     android:background="@drawable/linearebistvis_vol2"
     android:layout_height="match_parent">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/commentrecyle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/comment_item" />
+
     <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="15dp" >
+        app:layout_constraintStart_toStartOf="parent">
+
         <com.google.android.material.imageview.ShapeableImageView
-            app:shapeAppearanceOverlay="@style/circle"
             android:id="@+id/commentPfp"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -23,18 +35,22 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/avatars"/>
+            app:shapeAppearanceOverlay="@style/circle"
+            android:src="@drawable/img_9" />
+
         <EditText
-            android:layout_gravity="center_vertical"
             android:layout_width="250dp"
-            android:layout_height="wrap_content" />
-        <Button
-            android:layout_gravity="center_vertical
-"           android:fontFamily="@font/kai"
-            android:layout_width="90dp"
-            android:text="Comment"
             android:layout_height="wrap_content"
-            android:background="@drawable/inappbuttons" />
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical
+"
+            android:background="@drawable/inappbuttons"
+            android:fontFamily="@font/kai"
+            android:text="Comment" />
 
     </LinearLayout>
 
