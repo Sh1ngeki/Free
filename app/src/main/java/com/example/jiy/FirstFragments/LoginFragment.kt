@@ -88,6 +88,8 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                     ).show()
                     println(FirebaseAuth.getInstance().currentUser?.displayName.toString())
 
+
+
                     friendslist.clear()
 
                     println(FirebaseAuth.getInstance().uid)
@@ -135,7 +137,6 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                         it.child("userid").value.toString(),
                                                                         it.child("gmail").value.toString(),
                                                                     )
-
                                                                     friendslist.add(friend)
                                                                     if (friendslist.size == frnd1.size - 1) {
                                                                         println("done")
