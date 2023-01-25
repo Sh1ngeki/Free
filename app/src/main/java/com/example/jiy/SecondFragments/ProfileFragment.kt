@@ -21,6 +21,8 @@ import com.example.jiy.FirstFragments.RegistrationFragment
 import com.example.jiy.MainActivity
 import com.example.jiy.PasswordChange
 import com.example.jiy.R
+import com.example.jiy.viewpagerpages.FirstPage
+import com.example.jiy.viewpagerpages.SecondPage
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
@@ -76,6 +78,14 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
 
         }
         signoutbutton.setOnClickListener {
+            imagedata.imagedata = null
+            SecondPage.postdata.posts=null
+            FriendsFragment.Mydata.friendsdata= arrayListOf()
+            LoginFragment.MySingleton.imageuri=null
+            LoginFragment.MySingleton.data=null
+            LoginFragment.MySingleton.friendpost=null
+            LoginFragment.MySingleton.postdata=null
+            FirstPage.friendpost.posts1=null
 
             fragmentTransaction?.replace(R.id.container, LoginFragment())
             fragmentTransaction?.addToBackStack(null)
@@ -86,6 +96,7 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
             val editor = preferences?.edit()
             editor?.clear()
             editor?.apply()
+
 
 
 
