@@ -13,13 +13,16 @@ import com.example.jiy.SecondFragments.ProfileFragment
 
 
 class PostRecyclerAdapter(private val posts: List<PostClass>): RecyclerView.Adapter<PostRecyclerAdapter.PostViewHolder>()  {
-
+    var onitemclick:((PostClass)->Unit)?=null
     inner class PostViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private  val imageView: ImageView = itemView.findViewById(R.id.Pfp)
         private  val username: TextView = itemView.findViewById(R.id.feedUsername)
         private  val comment: TextView  = itemView.findViewById(R.id.comment)
         private  val description: TextView = itemView.findViewById(R.id.feedDescription)
-        fun setData(person: PostClass) {
+
+
+
+        fun setData(person: PostClass)   {
 
             Glide.with(itemView).load(person.imageuri).into(imageView)
 
@@ -40,7 +43,14 @@ class PostRecyclerAdapter(private val posts: List<PostClass>): RecyclerView.Adap
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.setData(posts[position])
+
+        holder.itemView.setOnClickListener {
+            onitemclick?.invoke(PostClass())
+            println(onitemclick)
+        }
+
     }
+
 
     override fun getItemCount() = posts.size
 

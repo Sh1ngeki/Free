@@ -87,6 +87,11 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                 builder.setView(R.layout.loading_fragment)
                 val dialog = builder.create()
                 dialog.show()
+                editor?.putString("email",mail)
+                editor?.putString("password",pass)
+                editor?.apply()
+
+
                 userref.child("everyone").get().addOnSuccessListener {
                     if (it.exists()){
                         poster = it.value as ArrayList<String>
@@ -543,13 +548,16 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                             }
 
                         Thread.sleep(3000)
-                        FirebaseAuth.getInstance().signInWithEmailAndPassword(mail!!, pass!!)
+                        FirebaseAuth.getInstance().signInWithEmailAndPassword(mail, pass)
                             .addOnSuccessListener {
                                 Toast.makeText(
                                     this@LoginFragment.requireContext(),
                                     "Welcome",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                editor?.putString("email",mail)
+                                editor?.putString("password",pass)
+                                editor?.apply()
                                 println(FirebaseAuth.getInstance().currentUser?.displayName.toString())
 
 

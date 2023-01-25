@@ -1,5 +1,6 @@
 package com.example.jiy.viewpagerpages
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -151,7 +152,19 @@ class SecondPage:Fragment(R.layout.discovery_page) {
 
         }
 
+        recyclerAdapter.onitemclick={
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setCancelable(true)
+            builder.setView(R.layout.comment_layout)
+            val dialog = builder.create()
+            dialog.show()
+            commentdata.commentText= it.user
+            println(it.user)
+            println(it)
+            println(it.post)
+            println("olaaaaa")
 
+        }
 
 
 
@@ -169,6 +182,9 @@ class SecondPage:Fragment(R.layout.discovery_page) {
     }
     object postdata{
         var posts :ArrayList<PostClass>?=null
+    }
+    object commentdata{
+        var commentText:String=""
     }
 
 
