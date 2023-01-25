@@ -21,7 +21,7 @@
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="300dp"
         android:background="@drawable/linearebistvis"
         android:orientation="vertical"
         android:layout_marginBottom="40dp"
@@ -37,13 +37,6 @@
             android:layout_marginEnd="8dp"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/img_6" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,18 +45,18 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="250dp"
                     android:fontFamily="@font/kai3"
                     android:hint="Post anything"
                     android:inputType="text"
-                    android:maxLength="100"
+                    android:maxLength="150"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="*Max 100 character"
+                android:text="*Max 150 character"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
