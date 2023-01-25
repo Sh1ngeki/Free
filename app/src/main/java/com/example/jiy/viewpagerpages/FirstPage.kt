@@ -37,7 +37,7 @@ class FirstPage:Fragment(R.layout.friends_page) {
         savedInstanceState: Bundle?
     ): View? {
         val view =inflater.inflate(R.layout.friends_page,container,false)
-        println("aeebdebdhebdheb ${LoginFragment.MySingleton.friendpost}")
+
         recyclerview = view.findViewById(R.id.recycle2)
         if (friendpost.posts1!=null &&!friendpost.posts1?.isEmpty()!!){
             postclassarray1 = friendpost.posts1!!
@@ -45,9 +45,8 @@ class FirstPage:Fragment(R.layout.friends_page) {
         }else
         if (LoginFragment.MySingleton.friendpost!=null) {
             value = LoginFragment.MySingleton.friendpost!!
-            println("ashahjsajshjahsjahsaj")
-            println(value)
-            println("ashahjsajshjahsjahsaj")
+
+
             postclassarray1 = value
 
         }
@@ -70,17 +69,16 @@ class FirstPage:Fragment(R.layout.friends_page) {
                 .get().addOnSuccessListener {kai->
                     if (kai.exists()){
                         val posterfriends = kai.child("friendsname").value as ArrayList<String>
-                        println(posterfriends)
-                        println("bjobjo megobari")
+
                         for(i in posterfriends){
                             if (i.length>1) {
                                 userref.child(i.trim()).child("posts").get()
                                     .addOnSuccessListener { pos1 ->
                                         if (pos1.exists()) {
-                                            println("bjobjo $pos1")
+
 
                                             val allpost = pos1.value as ArrayList<String>
-                                            println("bijooo$allpost")
+
                                             for (k in allpost) {
                                                 storagereference.listAll()
                                                     .addOnSuccessListener { listResult ->
@@ -88,7 +86,7 @@ class FirstPage:Fragment(R.layout.friends_page) {
                                                         var imageexistance = false
                                                         for (item in items) {
                                                             if (item.name.trim() == i.trim()) {
-                                                                println("object exists")
+
                                                                 imageexistance = true
                                                                 storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
                                                                     if (k.length > 1) {
@@ -101,10 +99,8 @@ class FirstPage:Fragment(R.layout.friends_page) {
                                                                         postclassarray1.add(
                                                                             post
                                                                         )
-                                                                        println(
-                                                                            postclassarray1
-                                                                        )
-                                                                        println("megobrebtan ertad")
+
+
                                                                         LoginFragment.MySingleton.friendpost =
                                                                             postclassarray1
                                                                         hehe(postclassarray1)
@@ -116,7 +112,7 @@ class FirstPage:Fragment(R.layout.friends_page) {
                                                             }
                                                         }
                                                         if (!imageexistance) {
-                                                            println("araaaaaaaaaaaraaaaaaaaa")
+
                                                             storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
                                                                 if (k.length > 1) {
                                                                     val post =
@@ -126,8 +122,7 @@ class FirstPage:Fragment(R.layout.friends_page) {
                                                                             uri
                                                                         )
                                                                     postclassarray1.add(post)
-                                                                    println(postclassarray1)
-                                                                    println("aeaseaesesaes")
+
                                                                     LoginFragment.MySingleton.friendpost =
                                                                         postclassarray1
                                                                     hehe(postclassarray1)
@@ -173,7 +168,7 @@ class FirstPage:Fragment(R.layout.friends_page) {
 
 
 
-        println("heeeeeheeee")
+
         return view
     }
 

@@ -69,7 +69,7 @@ class PasswordChange : Fragment(R.layout.change_password_fragment) {
                 user.reauthenticateAndRetrieveData(credential)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            println("success")
+
 
                             if (newpassw1==newpassw2 && newpassw1.length>=6){
                                 val builder = AlertDialog.Builder(this.requireContext())

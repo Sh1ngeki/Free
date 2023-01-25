@@ -18,9 +18,9 @@ class Commenting:Fragment(R.layout.comment_layout) {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view =inflater.inflate(R.layout.comment_layout,container,false)
         println("haimeeeee")
-        commentText=view.findViewById(R.id.comment)
-        println(SecondPage.commentdata.commentText)
-        commentText.setText(SecondPage.commentdata.commentText)
+//        commentText=view.findViewById(R.id.comment)
+//        println(SecondPage.commentdata.commentText)
+//        commentText.setText(SecondPage.commentdata.commentText)
 
 
 

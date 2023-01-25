@@ -55,17 +55,17 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
                             query.addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                                     if (dataSnapshot.exists() && username.trim() !="everyone") {
-                                        println("already")
+
                                         FirebaseAuth.getInstance().currentUser?.delete()
                                     } else {
                                         // username is available, proceed with registration
-                                        println("new")
+
                                         val us = Users(FirebaseAuth.getInstance().uid.toString(),username,mail,emptylist,emptylist)
                                         databaseReference.child(username).setValue(us)
                                         databaseReference.child("everyone").get().addOnSuccessListener {
                                             if (it.exists()){
                                                 everyonelist = it.value as ArrayList<String>
-                                                println(everyonelist)
+
                                                 everyonelist.add(username)
                                                 databaseReference.child("everyone").setValue(everyonelist)
                                             }

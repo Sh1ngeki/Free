@@ -76,11 +76,11 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
             fragmentTransaction?.commit()
         }
 
-        println(FirebaseAuth.getInstance().currentUser)
+
         if (FirebaseAuth.getInstance().currentUser !=null){
             val mail = preferences?.getString("email", "")
             val pass = preferences?.getString("password", "")
-            println("saaaaaaaaaaaaaaa$mail$pass")
+
             if(mail !="" &&pass!=""){
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setCancelable(false)
@@ -95,7 +95,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                 userref.child("everyone").get().addOnSuccessListener {
                     if (it.exists()){
                         poster = it.value as ArrayList<String>
-                        println(poster)
+
                         for(i in poster){
                             userref.child(i.trim()).child("posts").get()
                                 .addOnSuccessListener {pos->
@@ -109,15 +109,14 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                     var imageexistance = false
                                                     for (item in items) {
                                                         if (item.name.trim() == i.trim()) {
-                                                            println("object exists")
+
                                                             imageexistance = true
                                                             storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
                                                                 if (k.length > 1) {
                                                                     val post =
                                                                         PostClass(k, i.trim(), uri)
                                                                     postclassarray.add(post)
-                                                                    println(postclassarray)
-                                                                    println("aeaseaesesaes")
+
                                                                     MySingleton.postdata=postclassarray
 
                                                                 }
@@ -127,14 +126,13 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                         }
                                                     }
                                                     if (!imageexistance){
-                                                        println("araaaaaaaaaaaraaaaaaaaa")
+
                                                         storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
                                                             if (k.length > 1) {
                                                                 val post =
                                                                     PostClass(k, i.trim(), uri)
                                                                 postclassarray.add(post)
-                                                                println(postclassarray)
-                                                                println("aeaseaesesaes")
+
                                                                 MySingleton.postdata=postclassarray
 
 
@@ -162,17 +160,16 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                         .get().addOnSuccessListener {kai->
                             if (kai.exists()){
                                 val posterfriends = kai.child("friendsname").value as ArrayList<String>
-                                println(posterfriends)
-                                println("bjobjo megobari")
+
                                 for(i in posterfriends){
                                     if (i.length>1) {
                                         userref.child(i.trim()).child("posts").get()
                                             .addOnSuccessListener { pos1 ->
                                                 if (pos1.exists()) {
-                                                    println("bjobjo $pos1")
+
 
                                                     val allpost = pos1.value as ArrayList<String>
-                                                    println("bijooo$allpost")
+
                                                     for (k in allpost) {
                                                         storagereference.listAll()
                                                             .addOnSuccessListener { listResult ->
@@ -180,7 +177,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                 var imageexistance = false
                                                                 for (item in items) {
                                                                     if (item.name.trim() == i.trim()) {
-                                                                        println("object exists")
+
                                                                         imageexistance = true
                                                                         storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
                                                                             if (k.length > 1) {
@@ -193,10 +190,8 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                                 postclassarray1.add(
                                                                                     post
                                                                                 )
-                                                                                println(
-                                                                                    postclassarray1
-                                                                                )
-                                                                                println("megobrebtan ertad")
+
+
                                                                                 MySingleton.friendpost =
                                                                                     postclassarray1
 
@@ -208,7 +203,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                     }
                                                                 }
                                                                 if (!imageexistance) {
-                                                                    println("araaaaaaaaaaaraaaaaaaaa")
+
                                                                     storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
                                                                         if (k.length > 1) {
                                                                             val post =
@@ -218,8 +213,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                                     uri
                                                                                 )
                                                                             postclassarray1.add(post)
-                                                                            println(postclassarray1)
-                                                                            println("aeaseaesesaes")
+
                                                                             MySingleton.friendpost =
                                                                                 postclassarray1
 
@@ -254,22 +248,21 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                 "Welcome",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            println(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+
 
 
 
                             friendslist.clear()
 
-                            println(FirebaseAuth.getInstance().uid)
+
                             userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).get()
                                 .addOnSuccessListener {
 
                                     if (it.exists()) {
-                                        println("uid")
+
 
                                         frnd1 = it.child("friendsname").value as ArrayList<String>
-                                        println("frnd"+frnd1)
-                                        println(frnd1.size)
+
                                         if (frnd1.size==1) {
                                             MySingleton.data = arrayListOf()
                                             loadprofileimage()
@@ -279,7 +272,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                 FullNavFragment()
 
                                             )
-                                            println("datanull")
+
                                             dialog.dismiss()
                                             fragmentTransaction?.commit()
 
@@ -297,7 +290,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                 var imageexistance = false
                                                                 for (item in items) {
                                                                     if (item.name.trim() == i.trim()) {
-                                                                        println("object exists")
+
                                                                         imageexistance = true
                                                                         storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
                                                                             val friend = Friends(
@@ -308,8 +301,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                             )
                                                                             friendslist.add(friend)
                                                                             if (friendslist.size == frnd1.size - 1) {
-                                                                                println("done")
-                                                                                println(friendslist)
+
 
                                                                                 MySingleton.data =
                                                                                     friendslist
@@ -338,8 +330,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                         )
                                                                         friendslist.add(friend)
                                                                         if (friendslist.size == frnd1.size - 1) {
-                                                                            println("done")
-                                                                            println(friendslist)
+
                                                                             loadprofileimage()
                                                                             MySingleton.data =
                                                                                 friendslist
@@ -396,145 +387,72 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                     builder.setView(R.layout.loading_fragment)
                     val dialog = builder.create()
                     dialog.show()
-                    userref.child("everyone").get().addOnSuccessListener {
-                        if (it.exists()){
-                            poster = it.value as ArrayList<String>
-                            println(poster)
-                            for(i in poster){
-                                userref.child(i.trim()).child("posts").get()
-                                    .addOnSuccessListener {pos->
-                                        if (pos.exists()){
+                    editor?.putString("email",mail)
+                    editor?.putString("password",pass)
+                    editor?.apply()
 
-                                            val allpost =pos.value as ArrayList<String>
-                                            for (k in allpost){
-                                                storagereference.listAll()
-                                                    .addOnSuccessListener { listResult ->
-                                                        val items = listResult.items
-                                                        var imageexistance = false
-                                                        for (item in items) {
-                                                            if (item.name.trim() == i.trim()) {
-                                                                println("object exists")
-                                                                imageexistance = true
-                                                                storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
-                                                                    if (k.length > 1) {
-                                                                        val post =
-                                                                            PostClass(k, i.trim(), uri)
-                                                                        postclassarray.add(post)
-                                                                        println(postclassarray)
-                                                                        println("aeaseaesesaes")
-                                                                        MySingleton.postdata=postclassarray
-
-                                                                    }
-                                                                }
-
-
-                                                            }
-                                                        }
-                                                        if (!imageexistance){
-                                                            println("araaaaaaaaaaaraaaaaaaaa")
-                                                            storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
-                                                                if (k.length > 1) {
-                                                                    val post =
-                                                                        PostClass(k, i.trim(), uri)
-                                                                    postclassarray.add(post)
-                                                                    println(postclassarray)
-                                                                    println("aeaseaesesaes")
-                                                                    MySingleton.postdata=postclassarray
-
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(mail, pass)
+                        .addOnSuccessListener {
+                            Toast.makeText(
+                                this@LoginFragment.requireContext(),
+                                "Welcome",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            editor?.putString("email",mail)
+                            editor?.putString("password",pass)
+                            editor?.apply()
 
 
 
-                                            }
+                            userref.child("everyone").get().addOnSuccessListener {
+                                if (it.exists()){
+                                    poster = it.value as ArrayList<String>
 
+                                    for(i in poster){
+                                        userref.child(i.trim()).child("posts").get()
+                                            .addOnSuccessListener {pos->
+                                                if (pos.exists()){
 
-                                        }
+                                                    val allpost =pos.value as ArrayList<String>
+                                                    for (k in allpost){
+                                                        storagereference.listAll()
+                                                            .addOnSuccessListener { listResult ->
+                                                                val items = listResult.items
+                                                                var imageexistance = false
+                                                                for (item in items) {
+                                                                    if (item.name.trim() == i.trim()) {
 
-
-                                    }
-
-
-                            }
-
-                        }
-
-                        userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString())
-                            .get().addOnSuccessListener {kai->
-                                if (kai.exists()){
-                                    val posterfriends = kai.child("friendsname").value as ArrayList<String>
-                                    println(posterfriends)
-                                    println("bjobjo megobari")
-                                    for(i in posterfriends){
-                                        if (i.length>1) {
-                                            userref.child(i.trim()).child("posts").get()
-                                                .addOnSuccessListener { pos1 ->
-                                                    if (pos1.exists()) {
-                                                        println("bjobjo $pos1")
-
-                                                        val allpost = pos1.value as ArrayList<String>
-                                                        println("bijooo$allpost")
-                                                        for (k in allpost) {
-                                                            storagereference.listAll()
-                                                                .addOnSuccessListener { listResult ->
-                                                                    val items = listResult.items
-                                                                    var imageexistance = false
-                                                                    for (item in items) {
-                                                                        if (item.name.trim() == i.trim()) {
-                                                                            println("object exists")
-                                                                            imageexistance = true
-                                                                            storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
-                                                                                if (k.length > 1) {
-                                                                                    val post =
-                                                                                        PostClass(
-                                                                                            k,
-                                                                                            i.trim(),
-                                                                                            uri
-                                                                                        )
-                                                                                    postclassarray1.add(
-                                                                                        post
-                                                                                    )
-                                                                                    println(
-                                                                                        postclassarray1
-                                                                                    )
-                                                                                    println("megobrebtan ertad")
-                                                                                    MySingleton.friendpost =
-                                                                                        postclassarray1
-
-
-                                                                                }
-                                                                            }
-
-
-                                                                        }
-                                                                    }
-                                                                    if (!imageexistance) {
-                                                                        println("araaaaaaaaaaaraaaaaaaaa")
-                                                                        storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
+                                                                        imageexistance = true
+                                                                        storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
                                                                             if (k.length > 1) {
                                                                                 val post =
-                                                                                    PostClass(
-                                                                                        k,
-                                                                                        i.trim(),
-                                                                                        uri
-                                                                                    )
-                                                                                postclassarray1.add(post)
-                                                                                println(postclassarray1)
-                                                                                println("aeaseaesesaes")
-                                                                                MySingleton.friendpost =
-                                                                                    postclassarray1
+                                                                                    PostClass(k, i.trim(), uri)
+                                                                                postclassarray.add(post)
 
+                                                                                MySingleton.postdata=postclassarray
 
                                                                             }
                                                                         }
+
+
                                                                     }
                                                                 }
+                                                                if (!imageexistance){
+
+                                                                    storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
+                                                                        if (k.length > 1) {
+                                                                            val post =
+                                                                                PostClass(k, i.trim(), uri)
+                                                                            postclassarray.add(post)
+
+                                                                            MySingleton.postdata=postclassarray
 
 
-                                                        }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
 
 
                                                     }
@@ -542,101 +460,150 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
 
                                                 }
 
-                                        }
+
+                                            }
+
+
                                     }
 
                                 }
+                                println("kkkk")
 
-
-                            }
-
-                        Thread.sleep(3000)
-                        FirebaseAuth.getInstance().signInWithEmailAndPassword(mail, pass)
-                            .addOnSuccessListener {
-                                Toast.makeText(
-                                    this@LoginFragment.requireContext(),
-                                    "Welcome",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                editor?.putString("email",mail)
-                                editor?.putString("password",pass)
-                                editor?.apply()
                                 println(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+                                userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+                                    .get().addOnSuccessListener {kai->
+                                        if (kai.exists()){
+                                            println("kkkkkk")
+                                            println(kai)
+
+                                            val posterfriends = kai.child("friendsname").value as ArrayList<String>
+
+                                            for(i in posterfriends){
+                                                if (i.length>1) {
+                                                    userref.child(i.trim()).child("posts").get()
+                                                        .addOnSuccessListener { pos1 ->
+                                                            if (pos1.exists()) {
 
 
+                                                                val allpost = pos1.value as ArrayList<String>
 
-                                friendslist.clear()
+                                                                for (k in allpost) {
 
-                                println(FirebaseAuth.getInstance().uid)
-                                userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).get()
-                                    .addOnSuccessListener {
+                                                                    storagereference.listAll()
+                                                                        .addOnSuccessListener { listResult ->
+                                                                            val items = listResult.items
+                                                                            var imageexistance = false
+                                                                            for (item in items) {
+                                                                                if (item.name.trim() == i.trim()) {
 
-                                        if (it.exists()) {
-                                            println("uid")
+                                                                                    imageexistance = true
+                                                                                    storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
+                                                                                        if (k.length > 1) {
+                                                                                            val post =
+                                                                                                PostClass(
+                                                                                                    k,
+                                                                                                    i.trim(),
+                                                                                                    uri
+                                                                                                )
+                                                                                            postclassarray1.add(
+                                                                                                post
+                                                                                            )
 
-                                            frnd1 = it.child("friendsname").value as ArrayList<String>
-                                            println("frnd"+frnd1)
-                                            println(frnd1.size)
-                                            if (frnd1.size==1) {
-                                                MySingleton.data = arrayListOf()
-                                                loadprofileimage()
-                                                Thread.sleep(100)
-                                                fragmentTransaction?.replace(
-                                                    R.id.container,
-                                                    FullNavFragment()
+                                                                                            println(postclassarray1)
+                                                                                            MySingleton.friendpost =
+                                                                                                postclassarray1
 
-                                                )
-                                                println("datanull")
-                                                dialog.dismiss()
-                                                fragmentTransaction?.commit()
-
-
-                                            }else {
-                                                for (i in frnd1) {
-
-                                                    userref.child(i.trim()).get().addOnSuccessListener {
-                                                        if (it.exists() && !i.trim().isEmpty()) {
-                                                            //vamowmebt aris tu ara atvirtuli useris foto
-
-                                                            storagereference.listAll()
-                                                                .addOnSuccessListener { listResult ->
-                                                                    val items = listResult.items
-                                                                    var imageexistance = false
-                                                                    for (item in items) {
-                                                                        if (item.name.trim() == i.trim()) {
-                                                                            println("object exists")
-                                                                            imageexistance = true
-                                                                            storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
-                                                                                val friend = Friends(
-                                                                                    uri.toString(),
-                                                                                    it.child("username").value.toString(),
-                                                                                    it.child("userid").value.toString(),
-                                                                                    it.child("gmail").value.toString(),
-                                                                                )
-                                                                                friendslist.add(friend)
-                                                                                if (friendslist.size == frnd1.size - 1) {
-                                                                                    println("done")
-                                                                                    println(friendslist)
-
-                                                                                    MySingleton.data =
-                                                                                        friendslist
-                                                                                    loadprofileimage()
-                                                                                    Thread.sleep(200)
-                                                                                    fragmentTransaction?.replace(
-                                                                                        R.id.container,
-                                                                                        FullNavFragment()
-                                                                                    )
-                                                                                    dialog.dismiss()
-                                                                                    fragmentTransaction?.commit()
+                                                                                            println("alioo")
+                                                                                        }
+                                                                                    }
 
 
                                                                                 }
                                                                             }
+                                                                            if (!imageexistance) {
+
+                                                                                storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
+                                                                                    if (k.length > 1) {
+                                                                                        val post =
+                                                                                            PostClass(
+                                                                                                k,
+                                                                                                i.trim(),
+                                                                                                uri
+                                                                                            )
+                                                                                        postclassarray1.add(post)
+
+                                                                                        MySingleton.friendpost =
+                                                                                            postclassarray1
+                                                                                        println(postclassarray1)
+                                                                                        println("alioo")
+
+
+                                                                                    }
+                                                                                }
+                                                                            }
                                                                         }
 
-                                                                    }
-                                                                    if (!imageexistance) {
-                                                                        storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
+
+                                                                }
+
+
+                                                            }
+
+
+                                                        }
+
+                                                }
+                                            }
+
+                                        }
+
+
+                                    }
+
+                                Thread.sleep(3000)
+
+                            }
+                            friendslist.clear()
+
+
+                            userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).get()
+                                .addOnSuccessListener {
+
+                                    if (it.exists()) {
+
+
+                                        frnd1 = it.child("friendsname").value as ArrayList<String>
+
+                                        if (frnd1.size==1) {
+                                            MySingleton.data = arrayListOf()
+                                            loadprofileimage()
+                                            Thread.sleep(100)
+                                            fragmentTransaction?.replace(
+                                                R.id.container,
+                                                FullNavFragment()
+
+                                            )
+
+                                            dialog.dismiss()
+                                            fragmentTransaction?.commit()
+
+
+                                        }else {
+                                            for (i in frnd1) {
+
+                                                userref.child(i.trim()).get().addOnSuccessListener {
+                                                    if (it.exists() && !i.trim().isEmpty()) {
+                                                        //vamowmebt aris tu ara atvirtuli useris foto
+
+                                                        storagereference.listAll()
+                                                            .addOnSuccessListener { listResult ->
+                                                                val items = listResult.items
+                                                                var imageexistance = false
+                                                                for (item in items) {
+                                                                    if (item.name.trim() == i.trim()) {
+
+                                                                        imageexistance = true
+                                                                        storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
                                                                             val friend = Friends(
                                                                                 uri.toString(),
                                                                                 it.child("username").value.toString(),
@@ -645,11 +612,10 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                             )
                                                                             friendslist.add(friend)
                                                                             if (friendslist.size == frnd1.size - 1) {
-                                                                                println("done")
-                                                                                println(friendslist)
-                                                                                loadprofileimage()
+
                                                                                 MySingleton.data =
                                                                                     friendslist
+                                                                                loadprofileimage()
                                                                                 Thread.sleep(200)
                                                                                 fragmentTransaction?.replace(
                                                                                     R.id.container,
@@ -661,32 +627,58 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
 
                                                                             }
                                                                         }
-
                                                                     }
 
                                                                 }
-                                                                .addOnFailureListener {
-                                                                    dialog.dismiss()
+                                                                if (!imageexistance) {
+                                                                    storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
+                                                                        val friend = Friends(
+                                                                            uri.toString(),
+                                                                            it.child("username").value.toString(),
+                                                                            it.child("userid").value.toString(),
+                                                                            it.child("gmail").value.toString(),
+                                                                        )
+                                                                        friendslist.add(friend)
+                                                                        if (friendslist.size == frnd1.size - 1) {
+
+                                                                            loadprofileimage()
+                                                                            MySingleton.data =
+                                                                                friendslist
+                                                                            Thread.sleep(200)
+                                                                            fragmentTransaction?.replace(
+                                                                                R.id.container,
+                                                                                FullNavFragment()
+                                                                            )
+                                                                            dialog.dismiss()
+                                                                            fragmentTransaction?.commit()
+
+
+                                                                        }
+                                                                    }
 
                                                                 }
 
-                                                        }
-                                                    }
+                                                            }
+                                                            .addOnFailureListener {
+                                                                dialog.dismiss()
 
+                                                            }
+
+                                                    }
                                                 }
+
                                             }
                                         }
-
                                     }
 
+                                }
 
-                            }.addOnFailureListener { 
-                                dialog.dismiss()
-                                Toast.makeText(context, "error logging in", Toast.LENGTH_SHORT).show()
-                                loginpass.setText("")
-                                loginmail.setText("")
-                            }
-                    }
+
+                        }.addOnFailureListener{
+                            dialog.dismiss()
+                            Toast.makeText(context, "error logging in", Toast.LENGTH_SHORT).show()
+                        }
+
                 }
 
             }
@@ -712,10 +704,10 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                 var imageexistance = false
                 for (item in items) {
                     if (item.name.trim() == i.trim()) {
-                        println("object exists")
+
                         imageexistance = true
                         storagereference.child(i.trim()).downloadUrl.addOnSuccessListener { uri ->
-                            println("imageeee")
+
                             MySingleton.imageuri = uri
 
 
@@ -727,11 +719,11 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                 if (!imageexistance) {
                     storage1.child("Screenshot_20230120_043118.png").downloadUrl.addOnSuccessListener { uri ->
 
-                            println("imageeee")
+
                             MySingleton.imageuri = uri
 
                         }.addOnFailureListener{
-                            println("failed")
+
                             Toast.makeText(this.requireContext(), "failed", Toast.LENGTH_SHORT).show()
 
 

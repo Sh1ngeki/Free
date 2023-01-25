@@ -57,15 +57,12 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
         storagereference = FirebaseStorage.getInstance().getReference("users")
         storage1 = FirebaseStorage.getInstance().getReference("default")
 
-        println(value)
-        println(Mydata.friendsdata)
+
         if (!Mydata.friendsdata.isEmpty()){
             value = Mydata.friendsdata
-            println("ashahjsajshjahsjahsaj")
-            println(value)
-            println("ashahjsajshjahsjahsaj")
+
         }else if (LoginFragment.MySingleton.data !=null){
-            println("aeiieieiejdeidjiejdiejdi"+LoginFragment.MySingleton.data!!)
+
             value = LoginFragment.MySingleton.data!!
 
 
@@ -74,7 +71,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
 
 
         friendslist1 = value
-        println(value)
+
 
 
         recyclerAdapter = PersonRecyclerAdapter(friendslist1)
@@ -196,7 +193,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
 
 
                                                 userfriendlist1.add(friendusername)
-                                                println("userfriends"+userfriendlist1)
+
                                                 userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).child("friendsname").setValue(userfriendlist1)
 
                                             }
@@ -209,7 +206,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
 
 
                                                 userfriendlist2.add(FirebaseAuth.getInstance().currentUser?.displayName.toString())
-                                                println("userfriends2"+userfriendlist2)
+
                                                 userref.child(friendusername).child("friendsname").setValue(userfriendlist2)
 
                                             }
@@ -238,13 +235,11 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
 
 
     private fun getfriends(friendslist: ArrayList<Friends>) {
-        println()
-        println("getfriends" + friendslist)
+
         recyclerAdapter = PersonRecyclerAdapter(friendslist)
         recyclerview.layoutManager = LinearLayoutManager(this.requireContext())
         recyclerview.adapter = recyclerAdapter
-        println("value++++++"+value)
-        println("friednsasasdsad" +friendslist)
+
         Mydata.friendsdata = friendslist
 
 
