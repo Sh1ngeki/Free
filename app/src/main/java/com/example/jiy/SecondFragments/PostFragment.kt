@@ -40,8 +40,8 @@ class PostFragment:Fragment(R.layout.post_fragment) {
 
             if (!posttext.text.isEmpty()){
                 val builder = AlertDialog.Builder(this.requireContext())
-                builder.setTitle("Title of Dialog")
-                builder.setMessage("This is the message of the dialog.")
+                builder.setTitle("Do you really want to post?")
+                builder.setMessage("You can no longer delete this post")
                 builder.setPositiveButton("Yes") { dialog, _ ->
                     dialog.dismiss()
                     databaseReference.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).child("posts").get().addOnSuccessListener {
