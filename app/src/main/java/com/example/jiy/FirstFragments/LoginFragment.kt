@@ -112,7 +112,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                     println("datanull")
 
                                     fragmentTransaction?.commit()
-                                    dialog.dismiss()
+                                        dialog.dismiss()
                                 }else {
                                     for (i in frnd1) {
 

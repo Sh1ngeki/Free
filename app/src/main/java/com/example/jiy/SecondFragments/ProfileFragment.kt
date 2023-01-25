@@ -19,7 +19,9 @@ import com.bumptech.glide.Glide
 import com.example.jiy.FirstFragments.LoginFragment
 import com.example.jiy.FirstFragments.RegistrationFragment
 import com.example.jiy.MainActivity
+import com.example.jiy.PasswordChange
 import com.example.jiy.R
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -97,6 +99,15 @@ class ProfileFragment:Fragment(R.layout.profile_fragment) {
             builder.setView(R.layout.about_app)
             val dialog = builder.create()
             dialog.show()
+        }
+        passwordbutton.setOnClickListener {
+
+
+            fragmentTransaction?.replace(R.id.container, PasswordChange())
+            fragmentTransaction?.addToBackStack(null)
+            fragmentTransaction?.commit()
+
+
         }
 
 

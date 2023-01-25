@@ -86,7 +86,7 @@ class FriendsFragment:Fragment(R.layout.add_friends_fragment) {
             friendslist1.clear()
             val window = requireActivity().window
             window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-
+            Thread.sleep(10)
 
             userref.child(FirebaseAuth.getInstance().currentUser?.displayName.toString()).get().addOnSuccessListener {
 
