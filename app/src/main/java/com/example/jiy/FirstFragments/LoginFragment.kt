@@ -222,6 +222,16 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                 "Welcome",
                                 Toast.LENGTH_SHORT
                             ).show()
+
+                            editor?.putString(
+                                "email",
+                                mail
+                            )
+                            editor?.putString(
+                                "password",
+                                pass
+                            )
+                            editor?.apply()
                             println(FirebaseAuth.getInstance().currentUser?.displayName.toString())
 
                             friendslist.clear()
@@ -286,15 +296,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                                     FullNavFragment()
                                                                                 )
                                                                                 fragmentTransaction?.commit()
-                                                                                editor?.putString(
-                                                                                    "email",
-                                                                                    mail
-                                                                                )
-                                                                                editor?.putString(
-                                                                                    "password",
-                                                                                    pass
-                                                                                )
-                                                                                editor?.apply()
+
 
                                                                             }
                                                                         }
@@ -324,15 +326,7 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                                                             fragmentTransaction?.commit()
 
 
-                                                                            editor?.putString(
-                                                                                "email",
-                                                                                mail
-                                                                            )
-                                                                            editor?.putString(
-                                                                                "password",
-                                                                                pass
-                                                                            )
-                                                                            editor?.apply()
+
 
                                                                         }
                                                                     }
