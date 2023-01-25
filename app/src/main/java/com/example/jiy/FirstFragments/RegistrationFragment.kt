@@ -25,6 +25,7 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
     private lateinit var pass1text:EditText
     private lateinit var pass2text:EditText
     private lateinit var databaseReference: DatabaseReference
+    private var everyonelist = arrayListOf<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.registration_fragment, container, false)
@@ -53,7 +54,7 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
                             val query = databaseReference.orderByChild("username").equalTo(username)
                             query.addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                    if (dataSnapshot.exists()) {
+                                    if (dataSnapshot.exists() && username.trim() !="everyone") {
                                         println("already")
                                         FirebaseAuth.getInstance().currentUser?.delete()
                                     } else {
@@ -61,6 +62,17 @@ class RegistrationFragment:Fragment(R.layout.registration_fragment) {
                                         println("new")
                                         val us = Users(FirebaseAuth.getInstance().uid.toString(),username,mail,emptylist,emptylist)
                                         databaseReference.child(username).setValue(us)
+                                        databaseReference.child("everyone").get().addOnSuccessListener {
+                                            if (it.exists()){
+                                                everyonelist = it.value as ArrayList<String>
+                                                println(everyonelist)
+                                                everyonelist.add(username)
+                                                databaseReference.child("everyone").setValue(everyonelist)
+                                            }
+                                        }
+
+
+
                                         val profileUpdates = UserProfileChangeRequest.Builder()
                                             .setDisplayName(username)
                                             .build()
