@@ -373,6 +373,9 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                 }
 
 
+                        }.addOnFailureListener{
+                            dialog.dismiss()
+                            Toast.makeText(context, "error logging in", Toast.LENGTH_SHORT).show()
                         }
                 }
 
@@ -677,6 +680,11 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
                                     }
 
 
+                            }.addOnFailureListener { 
+                                dialog.dismiss()
+                                Toast.makeText(context, "error logging in", Toast.LENGTH_SHORT).show()
+                                loginpass.setText("")
+                                loginmail.setText("")
                             }
                     }
                 }
