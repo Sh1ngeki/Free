@@ -5,7 +5,7 @@ open up Jiyū, sit back and search in feed anything what you want!
 
 ## Overview
 ![overview](https://user-images.githubusercontent.com/115181439/214608462-01ff0e76-52c8-490d-a630-39fc22845133.png)
-Jiyū is an android social media app which came to life thanks to the Firebase Authentication, Realtime Database and Storage services. After registration, the users can sign inyo their account, edit their profile picture, upload posts, see other user's posts, add friends, comment on the posts and recommend some good movies each other!
+Jiyū is an android social media app which came to life thanks to the Firebase Authentication, Realtime Database and Storage services. After registration, the users can sign into their account, edit their profile picture, upload posts, see other user's posts, add friends, comment on the posts and recommend some good movies each other!
 
 
 ## WHAT IS POSSIBLE IN OUR APP?
